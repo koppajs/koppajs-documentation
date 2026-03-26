@@ -26,9 +26,11 @@
   <p align="center">
     <a href="https://github.com/koppajs/koppajs-core">KoppaJS Core</a>
     &middot;
+    <a href="https://github.com/koppajs/koppajs-vite-plugin">Vite Plugin</a>
+    &middot;
     <a href="https://github.com/koppajs/koppajs-router">Router</a>
     &middot;
-    <a href="https://github.com/koppajs/koppajs-example">Example Project</a>
+    <a href="https://github.com/koppajs/create-koppajs">create-koppajs</a>
     &middot;
     <a href="https://github.com/koppajs/koppajs-documentation/issues">Issues</a>
   </p>
@@ -77,6 +79,10 @@ This repository is intended to hold:
 The repository is currently intentionally light. It already acts as the
 documentation anchor used across the KoppaJS package READMEs, and it can grow
 incrementally as package-level docs are consolidated or expanded.
+
+That ecosystem map now includes the published `create-koppajs` starter entry
+point alongside the package-level runtime surfaces such as
+`@koppajs/koppajs-router`.
 
 Until more material lands here, the package READMEs and their local meta-layer
 documents remain the primary source for package-specific runtime, architecture,
