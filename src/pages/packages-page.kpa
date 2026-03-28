@@ -1,0 +1,131 @@
+[template]
+  <section class="page">
+    <article class="intro-card">
+      <p class="section-label">Package map</p>
+      <h2>Core, Vite plugin, router.</h2>
+      <p class="body-copy">
+        These three packages are the main implementation references for this
+        website. The docs repo should explain how they fit together without
+        duplicating each package's own local contract.
+      </p>
+    </article>
+
+    <div class="package-grid">
+      <article class="package-card">
+        <p class="package-label">koppajs-core</p>
+        <h3>Render, register, compose.</h3>
+        <p>
+          Provides the runtime that registers <code>.kpa</code> components and
+          boots the application shell in the browser.
+        </p>
+        <a href="https://github.com/koppajs/koppajs-core">Open repository</a>
+      </article>
+
+      <article class="package-card">
+        <p class="package-label">koppajs-vite-plugin</p>
+        <h3>Compile KoppaJS in Vite.</h3>
+        <p>
+          Transforms single-file components for local development, testing, and
+          production builds so the repo stays close to real app usage.
+        </p>
+        <a href="https://github.com/koppajs/koppajs-vite-plugin">Open repository</a>
+      </article>
+
+      <article class="package-card">
+        <p class="package-label">koppajs-router</p>
+        <h3>Own navigation explicitly.</h3>
+        <p>
+          Handles route matching, delegated navigation, active-link state, and
+          fallback rendering for the documentation pages.
+        </p>
+        <a href="https://github.com/koppajs/koppajs-router">Open repository</a>
+      </article>
+    </div>
+  </section>
+[/template]
+
+[css]
+  .page {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .intro-card,
+  .package-card {
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    background: rgba(8, 18, 28, 0.76);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+  }
+
+  .section-label,
+  .package-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.78rem;
+  }
+
+  .section-label {
+    color: #ffbc6a;
+  }
+
+  .package-label {
+    color: #58cebd;
+  }
+
+  h2,
+  h3,
+  p,
+  a {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0.45rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .body-copy {
+    margin-top: 0.75rem;
+    max-width: 58ch;
+    color: rgba(246, 243, 234, 0.78);
+    line-height: 1.7;
+  }
+
+  .package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .package-card h3 {
+    margin-top: 0.45rem;
+    font-size: 1.15rem;
+  }
+
+  .package-card p {
+    margin-top: 0.65rem;
+    color: rgba(246, 243, 234, 0.76);
+    line-height: 1.68;
+  }
+
+  .package-card a {
+    display: inline-flex;
+    margin-top: 0.95rem;
+    color: #ffbc6a;
+    text-decoration: none;
+  }
+
+  code {
+    color: #58cebd;
+  }
+
+  @media (max-width: 900px) {
+    .package-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+[/css]

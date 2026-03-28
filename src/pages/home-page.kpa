@@ -1,0 +1,140 @@
+[template]
+  <section class="page">
+    <div class="primary-card">
+      <p class="section-label">Overview</p>
+      <h2>A documentation website with runtime contracts.</h2>
+      <p class="summary">
+        The repository is no longer only a markdown anchor. It now ships a real
+        KoppaJS application shell so routing, package guidance, and quality
+        gates can be verified in the same place where the documentation lives.
+      </p>
+
+      <div class="action-row">
+        <a data-route="/getting-started" href="/getting-started" class="action-link">
+          Open the setup guide
+        </a>
+        <a data-route="/testing" href="/testing" class="action-link">
+          See the quality baseline
+        </a>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <article class="info-card">
+        <h3>One routed shell</h3>
+        <p>
+          The app shell keeps the navigation, route outlet, and package framing
+          in one place instead of scattering docs pages across package READMEs.
+        </p>
+      </article>
+
+      <article class="info-card">
+        <h3>Package-first structure</h3>
+        <p>
+          Core, Vite plugin, and router each keep clear ownership so examples
+          stay grounded in how KoppaJS is actually assembled.
+        </p>
+      </article>
+
+      <article class="info-card">
+        <h3>Docs that can fail</h3>
+        <p>
+          The site now participates in linting, type checks, Vitest, Playwright,
+          and CI instead of relying on prose-only correctness.
+        </p>
+      </article>
+    </div>
+  </section>
+[/template]
+
+[css]
+  .page {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .primary-card,
+  .info-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    background: rgba(8, 18, 28, 0.72);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+  }
+
+  .primary-card {
+    padding: 1.35rem;
+  }
+
+  .section-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.78rem;
+    color: #ffbc6a;
+  }
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0.45rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .summary {
+    margin-top: 0.8rem;
+    max-width: 60ch;
+    color: rgba(246, 243, 234, 0.78);
+    line-height: 1.72;
+  }
+
+  .action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .action-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.8rem;
+    padding: 0 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(88, 206, 189, 0.28);
+    background: rgba(88, 206, 189, 0.08);
+    color: #58cebd;
+    text-decoration: none;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.15rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .info-card p {
+    margin-top: 0.65rem;
+    color: rgba(246, 243, 234, 0.76);
+    line-height: 1.68;
+  }
+
+  @media (max-width: 840px) {
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+[/css]

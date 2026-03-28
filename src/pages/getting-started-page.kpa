@@ -1,0 +1,124 @@
+[template]
+  <section class="page">
+    <article class="doc-card">
+      <p class="section-label">Getting started</p>
+      <h2>Start from a real KoppaJS app shell.</h2>
+      <p class="body-copy">
+        The repository now behaves like an actual application project: install
+        dependencies, run the dev server, and verify changes through the same
+        commands CI uses.
+      </p>
+
+      <pre><code>npm install
+npm run dev
+npm run check
+npm run test:e2e</code></pre>
+    </article>
+
+    <div class="steps-grid">
+      <article class="step-card">
+        <h3>1. App shell</h3>
+        <p>
+          <code>src/components/app-shell.kpa</code> owns the persistent frame,
+          navigation, hero copy, and route outlet.
+        </p>
+      </article>
+
+      <article class="step-card">
+        <h3>2. Route table</h3>
+        <p>
+          <code>src/app-routes.ts</code> declares the canonical documentation
+          pages and the explicit catch-all fallback.
+        </p>
+      </article>
+
+      <article class="step-card">
+        <h3>3. Package integration</h3>
+        <p>
+          Vite builds with the official KoppaJS plugin while the browser runtime
+          comes from core and router.
+        </p>
+      </article>
+    </div>
+  </section>
+[/template]
+
+[css]
+  .page {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .doc-card,
+  .step-card {
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    background: rgba(8, 18, 28, 0.76);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+  }
+
+  .section-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.78rem;
+    color: #ffbc6a;
+  }
+
+  h2,
+  h3,
+  p,
+  pre {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0.45rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .body-copy {
+    margin-top: 0.75rem;
+    max-width: 58ch;
+    color: rgba(246, 243, 234, 0.78);
+    line-height: 1.7;
+  }
+
+  pre {
+    margin-top: 1rem;
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    background: rgba(5, 11, 18, 0.88);
+    border: 1px solid rgba(88, 206, 189, 0.15);
+    color: #58cebd;
+    overflow-x: auto;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .step-card h3 {
+    font-size: 1.08rem;
+  }
+
+  .step-card p {
+    margin-top: 0.65rem;
+    color: rgba(246, 243, 234, 0.76);
+    line-height: 1.66;
+  }
+
+  code {
+    color: #58cebd;
+  }
+
+  @media (max-width: 840px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+[/css]

@@ -1,0 +1,61 @@
+[template]
+  <section class="page">
+    <article class="not-found-card">
+      <p class="section-label">Not found</p>
+      <h2>Page not found.</h2>
+      <p class="body-copy">
+        The route exists as an explicit fallback so unknown documentation URLs
+        fail in a controlled, testable way.
+      </p>
+      <a data-route="/" href="/" class="home-link">Return to overview</a>
+    </article>
+  </section>
+[/template]
+
+[css]
+  .page {
+    display: grid;
+  }
+
+  .not-found-card {
+    padding: 1.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    background: rgba(8, 18, 28, 0.76);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+  }
+
+  .section-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.78rem;
+    color: #ffbc6a;
+  }
+
+  h2,
+  p,
+  a {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0.45rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .body-copy {
+    margin-top: 0.75rem;
+    max-width: 58ch;
+    color: rgba(246, 243, 234, 0.78);
+    line-height: 1.7;
+  }
+
+  .home-link {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: #58cebd;
+    text-decoration: none;
+  }
+[/css]

@@ -1,0 +1,8 @@
+commit_msg_file="$1"
+commit_msg_content=$(cat "$commit_msg_file")
+
+if echo "$commit_msg_content" | grep -qE "^(Merge|Revert|fixup!|squash!)"; then
+  exit 0
+fi
+
+npx commitlint --config commitlint.config.mjs --edit "$commit_msg_file"

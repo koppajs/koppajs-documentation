@@ -1,0 +1,118 @@
+[template]
+  <section class="page">
+    <article class="intro-card">
+      <p class="section-label">Testing</p>
+      <h2>Tests are part of the docs contract.</h2>
+      <p class="body-copy">
+        The site baseline now mirrors the stronger KoppaJS repos: fast local
+        verification through Vitest, browser validation through Playwright, and
+        CI coverage across Node 22 and 24.
+      </p>
+    </article>
+
+    <div class="testing-grid">
+      <article class="test-card">
+        <h3>Vitest</h3>
+        <p>
+          Covers route metadata and bootstrap behavior so regressions are caught
+          before a browser is even opened.
+        </p>
+        <p class="command">npm run test:run</p>
+      </article>
+
+      <article class="test-card">
+        <h3>Playwright</h3>
+        <p>
+          Exercises the routed docs shell end to end, including navigation,
+          active-link state, and the fallback page.
+        </p>
+        <p class="command">npm run test:e2e</p>
+      </article>
+
+      <article class="test-card">
+        <h3>CI</h3>
+        <p>
+          Quality gates run on Node 22 and 24, while the browser smoke test runs
+          on Node 22 with Playwright Chromium.
+        </p>
+        <p class="command">npm run check</p>
+      </article>
+    </div>
+  </section>
+[/template]
+
+[css]
+  .page {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .intro-card,
+  .test-card {
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    background: rgba(8, 18, 28, 0.76);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+  }
+
+  .section-label {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.78rem;
+    color: #ffbc6a;
+  }
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0.45rem;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .body-copy {
+    margin-top: 0.75rem;
+    max-width: 58ch;
+    color: rgba(246, 243, 234, 0.78);
+    line-height: 1.7;
+  }
+
+  .testing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .test-card h3 {
+    font-size: 1.12rem;
+  }
+
+  .test-card p:not(.command) {
+    margin-top: 0.65rem;
+    color: rgba(246, 243, 234, 0.76);
+    line-height: 1.68;
+  }
+
+  .command {
+    display: inline-flex;
+    margin-top: 0.95rem;
+    padding: 0.55rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(88, 206, 189, 0.08);
+    color: #58cebd;
+    font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 900px) {
+    .testing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+[/css]
