@@ -1,0 +1,156 @@
+  <documentation-layout path="/packages">
+    <section class="docs-page">
+      <section class="docs-hero-card">
+        <div class="docs-stack">
+          <p class="docs-eyebrow">Packages</p>
+          <h1 class="docs-title">How the KoppaJS ecosystem is divided.</h1>
+          <p class="docs-subtitle">Runtime, compiler, project generator and optional navigation intertwine, but remain clearly separated.</p>
+          <p class="docs-lead">Three packages always appear in the core documentation: <code>@koppajs/koppajs-core</code>, <code>@koppajs/koppajs-vite-plugin</code> and <code>create-koppajs</code>. For this interface, <code>@koppajs/koppajs-router</code> is also added to divide the documentation into individual pages.</p>
+          <div class="docs-chip-list">
+            <span class="docs-chip">Runtime</span>
+            <span class="docs-chip">Compiler</span>
+            <span class="docs-chip">CLI</span>
+            <span class="docs-chip">routers</span>
+          </div>
+        </div>
+
+        <article class="docs-mini-card">
+          <p class="docs-label">Technology stack</p>
+          <div class="docs-table-wrap">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>package</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>@koppajs/koppajs-core</code></td>
+                  <td>Runtime framework, component registration and reactivity</td>
+                </tr>
+                <tr>
+                  <td><code>@koppajs/koppajs-vite-plugin</code></td>
+                  <td>Compiles <code>.kpa</code> files for Dev and Build</td>
+                </tr>
+                <tr>
+                  <td><code>create-koppajs</code></td>
+                  <td>CLI for creating new projects and starters</td>
+                </tr>
+                <tr>
+                  <td><code>@koppajs/koppajs-router</code></td>
+                  <td>Optional routing for multi-page apps like this documentation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="rollen" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Roll</p>
+        <h2 class="docs-section-title">Each package covers a clear area of ​​responsibility.</h2>
+        <div class="docs-grid-2">
+          <article class="docs-mini-card">
+            <h3><code>@koppajs/koppajs-core</code></h3>
+            <p class="docs-text">Registers components via <code>Core.take()</code>, boots the application with <code>Core()</code>, manages reactive state and keeps DOM reconciliation, hooks, props and events together.</p>
+          </article>
+
+          <article class="docs-mini-card">
+            <h3><code>@koppajs/koppajs-vite-plugin</code></h3>
+            <p class="docs-text">Transforms <code>.kpa</code> single-file components into JavaScript, integrates TypeScript, and ensures that Vite-HMR and Build work with the same component form.</p>
+          </article>
+
+          <article class="docs-mini-card">
+            <h3><code>create-koppajs</code></h3>
+            <p class="docs-text">Delivers the fastest starting point, including project structure, Vite configuration and starter interface.</p>
+          </article>
+
+          <article class="docs-mini-card">
+            <h3><code>@koppajs/koppajs-router</code></h3>
+            <p class="docs-text">Not part of the minimal installation, but useful for documentary websites or real apps with multiple views. It solves routes, keeps links active and renders pages in the outlet.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="registrierung" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">registration</p>
+        <h2 class="docs-section-title">Components, plugins and modules all end up in the same startup sequence.</h2>
+        <article class="docs-mini-card">
+          <pre class="docs-code"><code>import { Core } from "@koppajs/koppajs-core";
+import appView from "./app-view.kpa";
+import storePlugin from "./store-plugin";
+import routerModule from "./router-module";
+
+Core.take(storePlugin);
+Core.take(routerModule);
+Core.take(appView, "app-view");
+
+Core();</code></pre>
+          <ul class="docs-list">
+            <li><code>Core.take(component, "tag-name")</code> registers a component as a custom element.</li>
+            <li><code>Core.take(plugin)</code> registers an app-wide service for <code>$take("name")</code>.</li>
+            <li><code>Core.take(module)</code> activates additional runtime functionality, for example under <code>this.$router</code>.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="einsatz" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">When which package?</p>
+        <h2 class="docs-section-title">A pragmatic decision-making framework for new projects.</h2>
+        <div class="docs-grid-2">
+          <article class="docs-mini-card">
+            <h3>Duty</h3>
+            <ul class="docs-list">
+              <li>You need <code>@koppajs/koppajs-core</code> in every KoppaJS app.</li>
+              <li>You need <code>@koppajs/koppajs-vite-plugin</code> as soon as you use <code>.kpa</code> files with Vite.</li>
+            </ul>
+          </article>
+
+          <article class="docs-mini-card">
+            <h3>Optional but practical</h3>
+            <ul class="docs-list">
+              <li>You use <code>create-koppajs</code> for quick project starts or starter updates.</li>
+              <li>You add <code>@koppajs/koppajs-router</code> if views, navigation and fallbacks should be modeled explicitly.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="docs-note">The official user documentation describes the core packages. Additional packages such as routers, stores or analytics are attached to the same basic architecture as plugins or modules.</div>
+      </section>
+
+      <section id="links" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">GitHub</p>
+        <h2 class="docs-section-title">Direct entry into the most important ecosystem projects.</h2>
+        <div class="docs-link-grid">
+          <article class="docs-link-card">
+            <p class="docs-label">Runtime</p>
+            <h3>koppajs core</h3>
+            <p>Framework core, state reactivity, hooks and component lifecycle.</p>
+            <a href="https://github.com/koppajs/koppajs-core" class="docs-link">Open on GitHub</a>
+          </article>
+
+          <article class="docs-link-card">
+            <p class="docs-label">Tooling</p>
+            <h3>koppajs-vite plugin</h3>
+            <p>Compiler and Vite binding for <code>.kpa</code> files.</p>
+            <a href="https://github.com/koppajs/koppajs-vite-plugin" class="docs-link">Open on GitHub</a>
+          </article>
+
+          <article class="docs-link-card">
+            <p class="docs-label">starter</p>
+            <h3>create-koppajs</h3>
+            <p>CLI starter for new projects and quick reference setups.</p>
+            <a href="https://www.npmjs.com/package/create-koppajs" class="docs-link">View package</a>
+          </article>
+
+          <article class="docs-link-card">
+            <p class="docs-label">routing</p>
+            <h3>koppajs router</h3>
+            <p>Optional routing for multi-page KoppaJS applications.</p>
+            <a href="https://github.com/koppajs/koppajs-router" class="docs-link">Open on GitHub</a>
+          </article>
+        </div>
+      </section>
+    </section>
+  </documentation-layout>

@@ -1,21 +1,30 @@
-import "./style.css";
+import "./standalone.css";
 
 import { Core } from "@koppajs/koppajs-core";
 import {
-  KOPPAJS_ROUTE_CHANGE_EVENT,
   KoppajsRouter,
+  KOPPAJS_ROUTE_CHANGE_EVENT,
+  setDocumentDescription,
 } from "@koppajs/koppajs-router";
 
-import { appRoutes } from "./app-routes";
-import { registerComponents } from "./components";
-import { registerPages } from "./pages";
-
-const ROUTE_LINK_SELECTOR = "a[data-route]";
+import { registerStandaloneShell } from "./components/standalone";
+import {
+  createDocumentationRoutes,
+  getDocumentationRouteMeta,
+  installDocumentationRouteMap,
+  registerDocumentation,
+} from "./integration";
+import {
+  getKoppaLocale,
+  KOPPAJS_LOCALE_CHANGE_EVENT,
+  syncKoppaDocumentLanguage,
+} from "./i18n";
 
 let routerStarted = false;
 
-registerComponents();
-registerPages();
+registerStandaloneShell();
+registerDocumentation();
+installDocumentationRouteMap();
 Core();
 
 bootRouter();
@@ -35,28 +44,37 @@ function bootRouter(): void {
   routerStarted = true;
 
   const router = new KoppajsRouter({
-    routes: appRoutes,
+    routes: createDocumentationRoutes({ locale: getKoppaLocale() }),
     outlet,
     root: document,
     basePath: import.meta.env.BASE_URL,
+    scrollBehavior: "auto",
   });
 
-  const syncRouteLinks = (): void => {
-    document
-      .querySelectorAll<HTMLAnchorElement>(ROUTE_LINK_SELECTOR)
-      .forEach((link) => {
-        const routeTarget = link.getAttribute("data-route");
-
-        if (!routeTarget) {
-          return;
-        }
-
-        link.setAttribute("href", router.hrefFor(routeTarget));
-      });
-  };
-
-  window.addEventListener(KOPPAJS_ROUTE_CHANGE_EVENT, syncRouteLinks);
-
   router.init();
-  syncRouteLinks();
+  syncDocumentationMetadata(router.getCurrentRoute().path);
+
+  if ("addEventListener" in window) {
+    window.addEventListener(KOPPAJS_ROUTE_CHANGE_EVENT, (event) => {
+      syncDocumentationMetadata(
+        (event as CustomEvent<{ path?: string }>).detail?.path ??
+          router.getCurrentRoute().path,
+      );
+    });
+
+    window.addEventListener(KOPPAJS_LOCALE_CHANGE_EVENT, () => {
+      const currentRoute = router.getCurrentRoute();
+
+      router.navigate(currentRoute.fullPath, { replace: true, scroll: false });
+      syncDocumentationMetadata(currentRoute.path);
+    });
+  }
+}
+
+function syncDocumentationMetadata(path: string): void {
+  const metadata = getDocumentationRouteMeta(path, getKoppaLocale());
+
+  document.title = metadata.title;
+  setDocumentDescription(document, metadata.description);
+  syncKoppaDocumentLanguage(document);
 }

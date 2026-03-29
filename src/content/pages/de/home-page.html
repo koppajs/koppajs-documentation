@@ -1,0 +1,208 @@
+<documentation-layout path="/">
+  <section class="docs-page">
+    <section class="docs-hero-card">
+      <div class="docs-stack">
+        <p class="docs-eyebrow">KoppaJS</p>
+        <h1 class="docs-title">Pragmatic frontend made modular.</h1>
+        <p class="docs-subtitle">
+          Build fast, simple, and growable – without the noise of modern
+          frameworks.
+        </p>
+        <p class="docs-lead">
+          KoppaJS ist ein leichtgewichtiges, modulares Frontend-Framework auf
+          Basis nativer Web Components. Diese Oberfläche bündelt die
+          vollständige Benutzerdokumentation zu Komponenten, Reaktivität,
+          Templates, Tooling, API und Beispielen in einer einzigen Docs-App.
+        </p>
+
+        <div class="docs-action-row">
+          <a href="/getting-started" class="docs-button docs-button--primary">
+            Schnellstart öffnen
+          </a>
+          <a href="/guides" class="docs-button"> Guides lesen </a>
+        </div>
+
+        <div class="docs-chip-list">
+          <span class="docs-chip">Single-File Components</span>
+          <span class="docs-chip">Proxy-basierte Reaktivität</span>
+          <span class="docs-chip">Lifecycle Hooks</span>
+          <span class="docs-chip">TypeScript-First</span>
+        </div>
+      </div>
+
+      <div class="docs-stack">
+        <article class="docs-mini-card">
+          <p class="docs-label">Quick start</p>
+          <p class="docs-text">
+            Der schnellste Weg in ein neues Projekt führt über die CLI oder die
+            minimale manuelle Vite-Integration.
+          </p>
+          <pre class="docs-code"><code>pnpm create koppajs my-app
+cd my-app
+pnpm install
+pnpm dev</code></pre>
+        </article>
+
+        <div class="docs-grid-2">
+          <article class="docs-mini-card">
+            <p class="docs-label">Runtime</p>
+            <p>
+              <code>@koppajs/koppajs-core</code> registriert Komponenten,
+              initialisiert die App und hält reaktiven State mit DOM-Updates
+              synchron.
+            </p>
+          </article>
+
+          <article class="docs-mini-card">
+            <p class="docs-label">Tooling</p>
+            <p>
+              Das offizielle Vite-Plugin kompiliert <code>.kpa</code>-Dateien
+              und hält HMR, Build und TypeScript-Unterstützung zusammen.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-section-card docs-section-card--strong">
+      <p class="docs-eyebrow">Was du hier findest</p>
+      <h2 class="docs-section-title">
+        Die komplette Benutzer-Dokumentation an einem Ort.
+      </h2>
+      <div class="docs-card-grid">
+        <article class="docs-mini-card">
+          <h3>Schnellstart</h3>
+          <p>
+            Von <code>create-koppajs</code> bis zur manuellen Vite-Einbindung:
+            Projektanlage, Ordnerstruktur, Scripts und Einstieg in Minuten.
+          </p>
+          <a href="/getting-started" class="docs-link"> Zu Start & Setup </a>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>Guides</h3>
+          <p>
+            Grundkonzepte, <code>.kpa</code>-Dateien, reaktiver State, Methoden,
+            Template-Syntax, Events, Props, Slots und Lifecycle.
+          </p>
+          <a href="/guides" class="docs-link"> Zu den Guides </a>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>Beispiele & API</h3>
+          <p>
+            Praxisnahe Codebeispiele, komplette Todo-App, direkte API-Referenz,
+            Direktiven, Kontextvariablen und bekannte Einschränkungen.
+          </p>
+          <a href="/examples" class="docs-link"> Zu Beispielen </a>
+        </article>
+      </div>
+    </section>
+
+    <section class="docs-section-card docs-section-anchor" id="kernmerkmale">
+      <p class="docs-eyebrow">Kernmerkmale</p>
+      <h2 class="docs-section-title">
+        Ein pragmatischer Stack statt Framework-Overhead.
+      </h2>
+      <div class="docs-grid-4">
+        <article class="docs-mini-card">
+          <h3>Single-File Components</h3>
+          <p>
+            Template, Script und Style leben zusammen in einer
+            <code>.kpa</code>-Datei.
+          </p>
+        </article>
+        <article class="docs-mini-card">
+          <h3>Reaktiver State</h3>
+          <p>
+            Proxy-basierte Reaktivität aktualisiert das DOM automatisch bei
+            Änderungen.
+          </p>
+        </article>
+        <article class="docs-mini-card">
+          <h3>TypeScript-First</h3>
+          <p>
+            <code>[ts]</code>-Blöcke, Vite-Integration und Typen für
+            <code>.kpa</code>-Imports sind Teil des Standard-Workflows.
+          </p>
+        </article>
+        <article class="docs-mini-card">
+          <h3>Native Web Components</h3>
+          <p>
+            Komponenten werden als Custom Elements registriert und bleiben
+            modular, standardnah und klein.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="docs-section-card docs-section-anchor" id="lernpfade">
+      <p class="docs-eyebrow">Lernpfade</p>
+      <h2 class="docs-section-title">
+        Arbeite dich entlang echter Anwendungsfälle durch die Doku.
+      </h2>
+      <div class="docs-link-grid">
+        <article class="docs-link-card">
+          <p class="docs-label">01</p>
+          <h3>Projekt aufsetzen</h3>
+          <p>
+            CLI, manuelle Einrichtung, Projektstruktur und zentrale
+            <code>npm</code>- oder <code>pnpm</code>-Skripte.
+          </p>
+          <a href="/getting-started" class="docs-link"> Schnellstart lesen </a>
+        </article>
+
+        <article class="docs-link-card">
+          <p class="docs-label">02</p>
+          <h3>Komponenten bauen</h3>
+          <p>
+            Lerne <code>.kpa</code>-Dateien, Template-Direktiven, Props, Slots,
+            Events und Eltern-Kind-Kommunikation.
+          </p>
+          <a href="/guides" class="docs-link"> Guides lesen </a>
+        </article>
+
+        <article class="docs-link-card">
+          <p class="docs-label">03</p>
+          <h3>Mit Beispielen lernen</h3>
+          <p>
+            Sieh dir kleine Patterns und die vollständige Todo-App an, um die
+            einzelnen Konzepte in einer realen Struktur zu sehen.
+          </p>
+          <a href="/examples" class="docs-link"> Beispiele öffnen </a>
+        </article>
+
+        <article class="docs-link-card">
+          <p class="docs-label">04</p>
+          <h3>Direkt zur Referenz</h3>
+          <p>
+            Greife auf Core API, Return-Objekte, Direktiven, Loop-Variablen,
+            Kontextvariablen und Lifecycle-Reihenfolgen zu.
+          </p>
+          <a href="/api" class="docs-link"> API nachschlagen </a>
+        </article>
+
+        <article class="docs-link-card">
+          <p class="docs-label">05</p>
+          <h3>Tooling konfigurieren</h3>
+          <p>
+            Vite-Plugin, TypeScript, Logger, VS Code Extension und
+            Qualitätsworkflow gehören ebenfalls zur Doku.
+          </p>
+          <a href="/tooling" class="docs-link"> Tooling ansehen </a>
+        </article>
+
+        <article class="docs-link-card">
+          <p class="docs-label">06</p>
+          <h3>Ökosystem verstehen</h3>
+          <p>
+            Kläre die Rollen von <code>koppajs-core</code>,
+            <code>koppajs-vite-plugin</code>, <code>create-koppajs</code> und
+            <code>koppajs-router</code>.
+          </p>
+          <a href="/packages" class="docs-link"> Paketübersicht öffnen </a>
+        </article>
+      </div>
+    </section>
+  </section>
+</documentation-layout>

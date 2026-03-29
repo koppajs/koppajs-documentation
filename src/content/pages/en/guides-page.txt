@@ -1,0 +1,117 @@
+  <documentation-layout path="/guides">
+    <section class="docs-page">
+      <section class="docs-hero-card">
+        <div class="docs-stack">
+          <p class="docs-eyebrow">Guides</p>
+          <h1 class="docs-title">Understand concepts and component behavior.</h1>
+          <p class="docs-subtitle">From basic principles to lifecycle, props, slots and parent-child communication.</p>
+          <p class="docs-lead">This page bundles the central working method of KoppaJS: components as custom elements, registration via <code>Core.take()</code>, reactive state, the template language and the interaction of props, events and hooks.</p>
+        </div>
+
+        <article class="docs-mini-card">
+          <p class="docs-label">Short form</p>
+          <pre class="docs-code"><code>Core.take(appView, "app-view");
+Core();
+
+return {
+  state: { count: 0 },
+  methods: {
+    increment() {
+      this.count++;
+    },
+  },
+};</code></pre>
+        </article>
+      </section>
+
+      <section id="konzepte" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Basic concepts</p>
+        <h2 class="docs-section-title">How KoppaJS works.</h2>
+        <div class="docs-grid-3">
+          <article class="docs-mini-card">
+            <h3>Components as Custom Elements</h3>
+            <p>Each component is registered as a native custom element. Due to the Web Components standard, the tag name must always contain a hyphen, such as <code>&lt;app-view&gt;&lt;/app-view&gt;</code>.</p>
+          </article>
+          <article class="docs-mini-card">
+            <h3>Register, then boot</h3>
+            <p>With <code>Core.take()</code> you register components, plugins or modules. Only <code>Core()</code> starts the framework and mounts registered elements in the DOM.</p>
+          </article>
+          <article class="docs-mini-card">
+            <h3>Reactive proxies</h3>
+            <p>The state is automatically wrapped in a proxy. Any mutation can trigger re-rendering without having to manually write DOM patches.</p>
+          </article>
+        </div>
+
+        <article class="docs-mini-card">
+          <h3>Components, plugins and modules</h3>
+          <p class="docs-text">Components render UI. Plugins provide app-wide services such as stores or router access via <code>$take("name")</code>. Modules extend components or elements with additional runtime logic.</p>
+          <pre class="docs-code"><code>import { Core } from "@koppajs/koppajs-core";
+import appView from "./app-view.kpa";
+import storePlugin from "./store-plugin";
+import routerModule from "./router-module";
+
+Core.take(storePlugin);
+Core.take(routerModule);
+Core.take(appView, "app-view");
+Core();</code></pre>
+          <pre class="docs-code"><code>created() {
+  const store = $take("store");
+  store.loadUser();
+},
+
+mounted() {
+  this.$router?.navigate("/dashboard");
+}</code></pre>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>Lifecycle of a KoppaJS app</h3>
+          <div class="docs-flow">
+            <div class="docs-flow-step">1. <code>main.ts</code> is loaded and imports <code>.kpa</code> files.</div>
+            <div class="docs-flow-step">2. <code>Core.take(...)</code> registers components and optional extensions.</div>
+            <div class="docs-flow-step">3. <code>Core()</code> starts the app and finds custom elements in the DOM.</div>
+            <div class="docs-flow-step">4. Script, props and reactive state are prepared, then <code>created()</code> fires.</div>
+            <div class="docs-flow-step">5. The template is processed, events are bound, the DOM is deployed and <code>mounted()</code> runs.</div>
+            <div class="docs-flow-step">6. Further state changes trigger automatic updates.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="sfc" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Single file components</p>
+        <h2 class="docs-section-title">How a <code>.kpa</code> file is structured.</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Block</th>
+                <th>Tags</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Template</td>
+                <td><code>[template]...[/template]</code></td>
+                <td>HTML structure with interpolation, directives and events</td>
+              </tr>
+              <tr>
+                <td>Script</td>
+                <td><code>[ts]...[/ts]</code> or <code>[js]...[/js]</code></td>
+                <td>Component logic, state, props, methods and hooks</td>
+              </tr>
+              <tr>
+                <td>Style</td>
+                <td><code>[css]</code>, <code>[scss]</code>, <code>[sass]</code></td>
+                <td>Component styles, optionally multiple times per file</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <pre class="docs-code"><code>[template]
+  &lt;div class="my-component"&gt;
+    &lt;h1&gt;{{ title }}&lt;/h1&gt;
+    &lt;button onClick="handleClick"&gt;Click me&lt;/button&gt;
+  &lt;/div&gt;
+</code></pre></section></section></documentation-layout>

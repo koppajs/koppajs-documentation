@@ -1,7 +1,7 @@
 import { Core } from "@koppajs/koppajs-core";
 
-import appShell from "./app-shell.kpa";
+import documentationLayout from "./documentation-layout.kpa";
 
-export function registerComponents(): void {
-  Core.take(appShell, "app-shell");
+export function registerDocumentationComponents(): void {
+  Core.take(documentationLayout, "documentation-layout");
 }

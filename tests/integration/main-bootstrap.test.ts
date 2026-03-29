@@ -1,10 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-type FakeLink = {
-  getAttribute: (name: string) => string | null;
-  setAttribute: (name: string, value: string) => void;
-};
-
 type RouterCtorOptions = {
   outlet: HTMLElement;
   root: Document;
@@ -15,34 +10,31 @@ type RouterCtorOptions = {
 };
 
 const outlet = {} as HTMLElement;
+const currentRoute = {
+  path: "/",
+  fullPath: "/",
+};
 
-function createFakeLink(initialRoute: string, initialHref: string): FakeLink {
-  const attributes = new Map([
-    ["data-route", initialRoute],
-    ["href", initialHref],
-  ]);
-
-  return {
-    getAttribute(name: string) {
-      return attributes.get(name) ?? null;
-    },
-    setAttribute(name: string, value: string) {
-      attributes.set(name, value);
-    },
-  };
-}
-
-const { core, take, routerCtor, routerHrefFor, routerInit } = vi.hoisted(() => {
+const {
+  core,
+  take,
+  routerCtor,
+  routerInit,
+  routerNavigate,
+  setDocumentDescription,
+} = vi.hoisted(() => {
   const take = vi.fn();
   const core = Object.assign(vi.fn(), { take });
   const routerInit = vi.fn();
-  const routerHrefFor = vi.fn((target: string) => target);
+  const routerNavigate = vi.fn();
+  const setDocumentDescription = vi.fn();
   const routerCtor = vi.fn(function RouterCtor(options: RouterCtorOptions) {
     void options;
 
     return {
-      hrefFor: routerHrefFor,
+      getCurrentRoute: () => currentRoute,
       init: routerInit,
+      navigate: routerNavigate,
     };
   });
 
@@ -50,8 +42,9 @@ const { core, take, routerCtor, routerHrefFor, routerInit } = vi.hoisted(() => {
     core,
     take,
     routerCtor,
-    routerHrefFor,
     routerInit,
+    routerNavigate,
+    setDocumentDescription,
   };
 });
 
@@ -62,34 +55,29 @@ vi.mock("@koppajs/koppajs-core", () => ({
 vi.mock("@koppajs/koppajs-router", () => ({
   KOPPAJS_ROUTE_CHANGE_EVENT: "koppajs-route-change",
   KoppajsRouter: routerCtor,
+  setDocumentDescription,
 }));
 
 describe("main bootstrap", () => {
   const querySelector = vi.fn((selector: string) =>
     selector === "#app-outlet" ? outlet : null,
   );
-  const querySelectorAll = vi.fn(() => [] as FakeLink[]);
-  const addEventListener = vi.fn();
   const requestAnimationFrame = vi.fn();
-  let links: FakeLink[] = [];
+  const addEventListener = vi.fn();
 
   beforeEach(() => {
-    links = [
-      createFakeLink("/", "/"),
-      createFakeLink("/getting-started", "/getting-started"),
-      createFakeLink("/packages", "/packages"),
-    ];
-
     querySelector.mockImplementation((selector: string) =>
       selector === "#app-outlet" ? outlet : null,
     );
-    querySelectorAll.mockImplementation(() => links);
-    addEventListener.mockReset();
     requestAnimationFrame.mockReset();
+    addEventListener.mockReset();
 
     vi.stubGlobal("document", {
+      documentElement: {
+        lang: "en",
+      },
       querySelector,
-      querySelectorAll,
+      title: "",
     } as unknown as Document);
     vi.stubGlobal("window", {
       addEventListener,
@@ -101,29 +89,39 @@ describe("main bootstrap", () => {
     core.mockClear();
     take.mockClear();
     routerCtor.mockClear();
-    routerHrefFor.mockClear();
     routerInit.mockClear();
+    routerNavigate.mockClear();
     vi.resetModules();
     vi.unstubAllGlobals();
   });
 
-  it("registers the app shell and pages, then boots the router once", async () => {
+  it("registers the standalone shell, documentation components, and pages, then boots the router once", async () => {
     await import("../../src/main");
 
-    expect(take).toHaveBeenCalledTimes(6);
-    expect(take).toHaveBeenNthCalledWith(1, expect.anything(), "app-shell");
-    expect(take).toHaveBeenNthCalledWith(2, expect.anything(), "home-page");
-    expect(take).toHaveBeenNthCalledWith(
-      3,
+    expect(take).toHaveBeenCalledTimes(18);
+    expect(take).toHaveBeenCalledWith(
       expect.anything(),
-      "getting-started-page",
+      "documentation-standalone-shell",
     );
-    expect(take).toHaveBeenNthCalledWith(4, expect.anything(), "packages-page");
-    expect(take).toHaveBeenNthCalledWith(5, expect.anything(), "testing-page");
-    expect(take).toHaveBeenNthCalledWith(
-      6,
+    expect(take).toHaveBeenCalledWith(
       expect.anything(),
-      "not-found-page",
+      "documentation-layout",
+    );
+    expect(take).toHaveBeenCalledWith(
+      expect.anything(),
+      "documentation-home-page-de",
+    );
+    expect(take).toHaveBeenCalledWith(
+      expect.anything(),
+      "documentation-home-page",
+    );
+    expect(take).toHaveBeenCalledWith(
+      expect.anything(),
+      "documentation-not-found-page-de",
+    );
+    expect(take).toHaveBeenCalledWith(
+      expect.anything(),
+      "documentation-not-found-page",
     );
     expect(core).toHaveBeenCalledTimes(1);
 
@@ -138,23 +136,20 @@ describe("main bootstrap", () => {
         path: route.path,
         componentTag: route.componentTag,
       })),
-    ).toEqual(
-      expect.arrayContaining([
-        { path: "/", componentTag: "home-page" },
-        { path: "/getting-started", componentTag: "getting-started-page" },
-        { path: "/packages", componentTag: "packages-page" },
-        { path: "/testing", componentTag: "testing-page" },
-        { path: "*", componentTag: "not-found-page" },
-      ]),
-    );
+    ).toEqual([
+      { path: "/", componentTag: "documentation-home-page" },
+      {
+        path: "/getting-started",
+        componentTag: "documentation-getting-started-page",
+      },
+      { path: "/guides", componentTag: "documentation-guides-page" },
+      { path: "/examples", componentTag: "documentation-examples-page" },
+      { path: "/api", componentTag: "documentation-api-page" },
+      { path: "/tooling", componentTag: "documentation-tooling-page" },
+      { path: "/packages", componentTag: "documentation-packages-page" },
+      { path: "*", componentTag: "documentation-not-found-page" },
+    ]);
 
-    expect(addEventListener).toHaveBeenCalledTimes(1);
     expect(routerInit).toHaveBeenCalledTimes(1);
-    expect(routerHrefFor).toHaveBeenNthCalledWith(1, "/");
-    expect(routerHrefFor).toHaveBeenNthCalledWith(2, "/getting-started");
-    expect(routerHrefFor).toHaveBeenNthCalledWith(3, "/packages");
-    expect(links[0]?.getAttribute("href")).toBe("/");
-    expect(links[1]?.getAttribute("href")).toBe("/getting-started");
-    expect(links[2]?.getAttribute("href")).toBe("/packages");
   });
 });

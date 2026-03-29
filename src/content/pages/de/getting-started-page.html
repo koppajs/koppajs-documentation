@@ -1,0 +1,259 @@
+<documentation-layout path="/getting-started">
+  <section class="docs-page">
+    <section class="docs-hero-card">
+      <div class="docs-stack">
+        <p class="docs-eyebrow">Schnellstart</p>
+        <h1 class="docs-title">Vom neuen Projekt zur laufenden KoppaJS-App.</h1>
+        <p class="docs-subtitle">
+          CLI, manuelle Vite-Integration, Projektstruktur und die wichtigsten
+          Scripts in einer zusammenhängenden Startseite.
+        </p>
+        <p class="docs-lead">
+          KoppaJS ist ein leichtgewichtiges, modulares Frontend-Framework auf
+          Basis nativer Web Components. Im Kern kombinierst du
+          <code>@koppajs/koppajs-core</code> mit dem offiziellen Vite-Plugin und
+          optional weiteren Paketen wie <code>create-koppajs</code> oder
+          <code>koppajs-router</code>.
+        </p>
+        <div class="docs-chip-list">
+          <span class="docs-chip">~13.6 kB gzipped</span>
+          <span class="docs-chip">Single-File Components</span>
+          <span class="docs-chip">TypeScript-First</span>
+          <span class="docs-chip">Web Components</span>
+        </div>
+      </div>
+
+      <article class="docs-mini-card">
+        <p class="docs-label">Sofort loslegen</p>
+        <pre class="docs-code"><code>pnpm create koppajs my-app
+cd my-app
+pnpm install
+pnpm dev</code></pre>
+      </article>
+    </section>
+
+    <section id="einfuhrung" class="docs-section-card docs-section-anchor">
+      <p class="docs-eyebrow">Einführung</p>
+      <h2 class="docs-section-title">Wofür KoppaJS gedacht ist.</h2>
+      <ul class="docs-list">
+        <li>
+          <strong>Single-File Components:</strong> Template, Script und Style in
+          einer <code>.kpa</code>-Datei.
+        </li>
+        <li>
+          <strong>Reaktives State Management:</strong> Proxy-basierte
+          DOM-Updates bei State-Änderungen.
+        </li>
+        <li>
+          <strong>Lifecycle Hooks:</strong> <code>created</code>,
+          <code>mounted</code>, <code>updated</code> und mehr.
+        </li>
+        <li>
+          <strong>TypeScript-First:</strong> erstklassige Unterstützung über
+          <code>[ts]</code>-Blöcke.
+        </li>
+        <li>
+          <strong>Vite-Integration:</strong> schnelles HMR und Builds über das
+          offizielle Plugin.
+        </li>
+      </ul>
+
+      <div class="docs-table-wrap">
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Paket</th>
+              <th>Zweck</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>@koppajs/koppajs-core</code></td>
+              <td>Runtime-Framework und Kernbibliothek</td>
+            </tr>
+            <tr>
+              <td><code>@koppajs/koppajs-vite-plugin</code></td>
+              <td>Kompiliert <code>.kpa</code>-Dateien zu JavaScript</td>
+            </tr>
+            <tr>
+              <td><code>create-koppajs</code></td>
+              <td>CLI zum Erstellen neuer Projekte</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="cli" class="docs-section-card docs-section-anchor">
+      <p class="docs-eyebrow">CLI</p>
+      <h2 class="docs-section-title">
+        Ein neues Projekt mit <code>create-koppajs</code> erzeugen.
+      </h2>
+      <div class="docs-grid-2">
+        <article class="docs-mini-card">
+          <h3>Projekt anlegen</h3>
+          <pre class="docs-code"><code># Mit pnpm (empfohlen)
+pnpm create koppajs my-app
+
+# Mit npm
+npm create koppajs my-app
+
+# Mit npx
+npx create-koppajs my-app</code></pre>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>CLI-Optionen</h3>
+          <ul class="docs-list">
+            <li><code>--help</code> / <code>-h</code> zeigt die Hilfe an.</li>
+            <li>
+              <code>--version</code> / <code>-v</code> zeigt die Version an.
+            </li>
+            <li>
+              Ohne Projektnamen startet eine interaktive Eingabeaufforderung.
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="docs-note">
+        Nach der Projektanlage startest du lokal mit
+        <code>cd my-app</code>, <code>pnpm install</code> und
+        <code>pnpm dev</code>.
+      </div>
+    </section>
+
+    <section id="manuell" class="docs-section-card docs-section-anchor">
+      <p class="docs-eyebrow">Manuelle Einrichtung</p>
+      <h2 class="docs-section-title">
+        KoppaJS in ein bestehendes Vite-Projekt integrieren.
+      </h2>
+      <div class="docs-stack">
+        <article class="docs-mini-card">
+          <h3>1. Pakete installieren</h3>
+          <pre class="docs-code"><code>pnpm add @koppajs/koppajs-core
+pnpm add -D @koppajs/koppajs-vite-plugin</code></pre>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>2. Vite konfigurieren</h3>
+          <pre class="docs-code"><code>import { defineConfig } from "vite";
+import koppaPlugin from "@koppajs/koppajs-vite-plugin";
+
+export default defineConfig({
+  plugins: [
+    koppaPlugin({
+      tsconfigFile: "./tsconfig.json",
+    }),
+  ],
+});</code></pre>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>3. Entry-Point erstellen</h3>
+          <pre
+            class="docs-code"
+          ><code>import { Core } from "@koppajs/koppajs-core";
+
+import appView from "./app-view.kpa";
+
+Core.take(appView, "app-view");
+Core();</code></pre>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>4. HTML-Datei aufsetzen</h3>
+          <pre class="docs-code"><code>&lt;!doctype html&gt;
+&lt;html lang="de"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;Meine KoppaJS App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;app-view&gt;&lt;/app-view&gt;
+    &lt;script type="module" src="/src/main.ts"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="struktur" class="docs-section-card docs-section-anchor">
+      <p class="docs-eyebrow">Projektstruktur</p>
+      <h2 class="docs-section-title">
+        Die minimale Form eines typischen KoppaJS-Projekts.
+      </h2>
+      <div class="docs-grid-2">
+        <article class="docs-mini-card">
+          <pre class="docs-code"><code>my-app/
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.mjs
+├── public/
+│   └── favicon.svg
+└── src/
+    ├── main.ts
+    ├── style.css
+    ├── app-view.kpa
+    └── counter-component.kpa</code></pre>
+        </article>
+
+        <article class="docs-mini-card">
+          <h3>Was wohin gehört?</h3>
+          <ul class="docs-list">
+            <li><code>index.html</code> ist das Vite-Entry-HTML.</li>
+            <li>
+              <code>src/main.ts</code> registriert Komponenten und bootet die
+              App.
+            </li>
+            <li><code>src/style.css</code> hält globale Styles.</li>
+            <li>
+              <code>app-view.kpa</code> ist typischerweise die Root-Komponente.
+            </li>
+            <li>
+              Weitere <code>.kpa</code>-Dateien bilden wiederverwendbare
+              UI-Bausteine.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="scripts" class="docs-section-card docs-section-anchor">
+      <p class="docs-eyebrow">Scripts</p>
+      <h2 class="docs-section-title">
+        Die wichtigsten Befehle für lokalen Workflow und Releases.
+      </h2>
+      <div class="docs-table-wrap">
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Script</th>
+              <th>Befehl</th>
+              <th>Beschreibung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>dev</code></td>
+              <td><code>vite --host</code></td>
+              <td>Entwicklungsserver starten</td>
+            </tr>
+            <tr>
+              <td><code>build</code></td>
+              <td><code>tsc &amp;&amp; vite build</code></td>
+              <td>Produktions-Build erstellen</td>
+            </tr>
+            <tr>
+              <td><code>serve</code></td>
+              <td><code>vite preview</code></td>
+              <td>Lokale Preview des Builds starten</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</documentation-layout>

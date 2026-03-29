@@ -1,0 +1,295 @@
+[template]
+  <documentation-layout path="/api">
+    <section class="docs-page">
+      <section class="docs-hero-card">
+        <div class="docs-stack">
+          <p class="docs-eyebrow">API</p>
+          <h1 class="docs-title">Die Referenz für Runtime, Direktiven und Komponentenvertrag.</h1>
+          <p class="docs-subtitle">
+            Wenn du etwas schnell nachschlagen willst, sollte diese Seite der
+            direkte Einstieg sein.
+          </p>
+          <p class="docs-lead">
+            Hier stehen die Kern-APIs, alle relevanten Rückgabefelder aus dem
+            Script-Block, Template-Direktiven, Kontextvariablen,
+            Lifecycle-Reihenfolgen und die bekannten Einschränkungen der
+            aktuellen Runtime.
+          </p>
+        </div>
+
+        <article class="docs-mini-card">
+          <p class="docs-label">Kurzreferenz</p>
+          <pre class="docs-code"><code>Core.take(appView, "app-view");
+Core();
+
+return {
+  state: {},
+  methods: {},
+  props: {},
+  events: [],
+};</code></pre>
+        </article>
+      </section>
+
+      <section id="core-api" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Core API</p>
+        <h2 class="docs-section-title">Die zentralen Einstiegspunkte der Runtime.</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>API</th>
+                <th>Beschreibung</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Core()</code></td>
+                <td>Initialisiert das Framework und mountet alle registrierten Komponenten.</td>
+              </tr>
+              <tr>
+                <td><code>Core.take(component, name)</code></td>
+                <td>Registriert eine Komponente als Custom Element.</td>
+              </tr>
+              <tr>
+                <td><code>Core.take(plugin)</code></td>
+                <td>Registriert ein Plugin oder einen appweiten Dienst.</td>
+              </tr>
+              <tr>
+                <td><code>Core.take(module)</code></td>
+                <td>Registriert ein Modul mit zusätzlicher Laufzeitfunktionalität.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="component-contract" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Return-Objekt</p>
+        <h2 class="docs-section-title">Was ein <code>[ts]</code>- oder <code>[js]</code>-Block zurückgeben kann.</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Feld</th>
+                <th>Typ</th>
+                <th>Beschreibung</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>state</code></td><td><code>Record&lt;string, any&gt;</code></td><td>Reaktiver State</td></tr>
+              <tr><td><code>methods</code></td><td><code>Record&lt;string, Function&gt;</code></td><td>Komponentenmethoden</td></tr>
+              <tr><td><code>props</code></td><td><code>Record&lt;string, PropsDefinition&gt;</code></td><td>Prop-Definitionen</td></tr>
+              <tr><td><code>events</code></td><td><code>[string, target, handler][]</code></td><td>Event-Handler-Tuples</td></tr>
+              <tr><td><code>watchList</code></td><td><code>string[]</code></td><td>Render-Filter für State-Pfade</td></tr>
+              <tr><td><code>created</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+              <tr><td><code>beforeMount</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+              <tr><td><code>mounted</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+              <tr><td><code>processed</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+              <tr><td><code>beforeUpdate</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+              <tr><td><code>updated</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+              <tr><td><code>beforeDestroy</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+              <tr><td><code>destroyed</code></td><td><code>() =&gt; void</code></td><td>Lifecycle Hook</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="context" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Kontext</p>
+        <h2 class="docs-section-title">Freie Variablen und Event-Tuples im Script-Kontext.</h2>
+        <div class="docs-grid-2">
+          <article class="docs-mini-card">
+            <h3>Kontextvariablen</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th>Typ</th>
+                    <th>Beschreibung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>$refs</code></td><td><code>Record&lt;string, HTMLElement&gt;</code></td><td>Element-Referenzen</td></tr>
+                  <tr><td><code>$parent</code></td><td><code>ComponentInstance | undefined</code></td><td>Elternkomponente</td></tr>
+                  <tr><td><code>$emit</code></td><td><code>(name, ...args) =&gt; void</code></td><td>Custom Events nach oben senden</td></tr>
+                  <tr><td><code>$take</code></td><td><code>(name) =&gt; data</code></td><td>Plugins oder Dienste abrufen</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="docs-mini-card">
+            <h3><code>events</code>-Tuple</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Feld</th>
+                    <th>Typ</th>
+                    <th>Beschreibung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>eventType</code></td><td><code>string</code></td><td>DOM-Eventname wie <code>click</code> oder <code>keydown</code></td></tr>
+                  <tr><td><code>target</code></td><td><code>string | Element | { ref, selector? }</code></td><td>Zielobjekt oder Zielmenge</td></tr>
+                  <tr><td><code>handler</code></td><td><code>Function</code></td><td>Handler-Funktion</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="docs-list">
+              <li><code>".btn"</code> adressiert einen CSS-Selektor.</li>
+              <li><code>"window"</code> bindet direkt ans globale Fenster.</li>
+              <li><code>{ ref: "name" }</code> nimmt ein per <code>ref</code> markiertes Element.</li>
+              <li><code>{ ref: "box", selector: ".item" }</code> wählt Kinder unter einer Referenz.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="template-api" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Template-API</p>
+        <h2 class="docs-section-title">Direktiven, Bindings und Loop-Metadaten.</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Direktive</th>
+                <th>Syntax</th>
+                <th>Beschreibung</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Interpolation</td><td><code>&#123;&#123; ausdruck &#125;&#125;</code></td><td>Text- oder HTML-Ausgabe</td></tr>
+              <tr><td>Dynamisches Attribut</td><td><code>:attr="ausdruck"</code></td><td>Dynamische Attribut-Bindung</td></tr>
+              <tr><td>Bedingung</td><td><code>if="bedingung"</code></td><td>Bedingtes Rendering</td></tr>
+              <tr><td>Sonst-Wenn</td><td><code>else-if="bedingung"</code></td><td>Alternative Bedingung</td></tr>
+              <tr><td>Sonst</td><td><code>else</code></td><td>Fallback</td></tr>
+              <tr><td>Schleife</td><td><code>loop="item in sammlung"</code></td><td>Listen-Iteration</td></tr>
+              <tr><td>Tuple-Schleife</td><td><code>loop="[k, v] in sammlung"</code></td><td>Iteration mit Schlüssel und Wert</td></tr>
+              <tr><td>Referenz</td><td><code>ref="name"</code></td><td>Speichert ein Element in <code>$refs</code></td></tr>
+              <tr><td>Event</td><td><code>onClick="methode"</code></td><td>Bindet einen Event-Handler</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="docs-grid-2">
+          <article class="docs-mini-card">
+            <h3>Loop-Variablen</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th>Beschreibung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>index</code></td><td>0-basierter Index</td></tr>
+                  <tr><td><code>key</code></td><td>Schlüssel des aktuellen Elements</td></tr>
+                  <tr><td><code>isFirst</code></td><td>Erstes Element?</td></tr>
+                  <tr><td><code>isLast</code></td><td>Letztes Element?</td></tr>
+                  <tr><td><code>isEven</code></td><td>Gerader Index?</td></tr>
+                  <tr><td><code>isOdd</code></td><td>Ungerader Index?</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="docs-mini-card">
+            <h3>Props-Definitionen</h3>
+            <pre class="docs-code"><code>props: {
+  name: { type: String, required: true },
+  farbe: { type: String, default: "blau" },
+  email: { type: String, regex: "^[a-z]+@[a-z]+\\.[a-z]+$" },
+}</code></pre>
+            <ul class="docs-list">
+              <li>Unterstützte Typen: <code>String</code>, <code>Number</code>, <code>Boolean</code>, <code>Array</code>, <code>Object</code>, <code>Function</code>.</li>
+              <li>Ein einfacher Pfad in einem <code>:binding</code> erlaubt Zwei-Wege-Bindung.</li>
+              <li>Bei Typ-Mismatch wird ein Fehler geloggt und die Prop nicht gesetzt.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="lifecycle" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Lifecycle</p>
+        <h2 class="docs-section-title">Hook-Reihenfolge und Update-Semantik.</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Hook</th>
+                <th>Zeitpunkt</th>
+                <th>Häufigkeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>created</code></td><td>Nach Script-Auswertung, vor DOM-Mount</td><td>Einmal</td></tr>
+              <tr><td><code>beforeMount</code></td><td>Vor erstem DOM-Einfügen</td><td>Einmal</td></tr>
+              <tr><td><code>mounted</code></td><td>Nach erstem DOM-Einfügen</td><td>Einmal</td></tr>
+              <tr><td><code>processed</code></td><td>Nach Template-Verarbeitung</td><td>Bei jedem Render</td></tr>
+              <tr><td><code>beforeUpdate</code></td><td>Vor jedem Re-Rendering</td><td>Bei Updates</td></tr>
+              <tr><td><code>updated</code></td><td>Nach jedem Re-Rendering</td><td>Bei Updates</td></tr>
+              <tr><td><code>beforeDestroy</code></td><td>Vor Entfernung</td><td>Einmal</td></tr>
+              <tr><td><code>destroyed</code></td><td>Nach Entfernung</td><td>Einmal</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <pre class="docs-code"><code>created -&gt; beforeMount -&gt; [processed] -&gt; mounted
+               ↓
+       beforeUpdate -&gt; [processed] -&gt; updated
+               ↓
+       beforeDestroy -&gt; destroyed</code></pre>
+
+        <div class="docs-grid-2">
+          <article class="docs-mini-card">
+            <h3><code>changedPaths</code></h3>
+            <p class="docs-text">
+              In <code>beforeUpdate</code> und <code>updated</code> ist
+              <code>this.changedPaths</code> als <code>Set&lt;string&gt;</code>
+              verfügbar. Es ist ephemer und lebt nur während des
+              Update-Zyklus.
+            </p>
+          </article>
+
+          <article class="docs-mini-card">
+            <h3><code>beforeUpdate</code> vs <code>updated</code></h3>
+            <ul class="docs-list">
+              <li><code>beforeUpdate</code> nutzt du, bevor das neue DOM eingehängt wird.</li>
+              <li><code>updated</code> nutzt du für Fokus, Messung oder imperative DOM-APIs nach dem Update.</li>
+              <li>Beide Hooks sehen dieselben <code>changedPaths</code>, aber zu unterschiedlichen Zeitpunkten.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="limitations" class="docs-section-card docs-section-anchor">
+        <p class="docs-eyebrow">Einschränkungen</p>
+        <h2 class="docs-section-title">Bekannte Grenzen der aktuellen Runtime.</h2>
+        <div class="docs-table-wrap">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Einschränkung</th>
+                <th>Erklärung</th>
+                <th>Workaround</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>Date</code>-Objekte im State</td><td>Proxy bricht native Date-Methoden</td><td>Timestamps oder ISO-Strings verwenden</td></tr>
+              <tr><td><code>RegExp</code> im State</td><td>Proxy-Kompatibilitätsprobleme</td><td>Regex als String speichern und bei Bedarf konvertieren</td></tr>
+              <tr><td>Tief verschachtelte Array-Mutationen</td><td><code>items[0].sub.push(x)</code> triggert nicht immer sauber</td><td>Eltern-Array neu zuweisen oder <code>splice</code> verwenden</td></tr>
+              <tr><td>Gefrorene Objekte</td><td>Mutation wirft einen Fehler</td><td>State nicht einfrieren</td></tr>
+              <tr><td>Kein automatisches CSS-Scoping</td><td>Styles sind global</td><td>Tagnamen als Selektor-Prefix verwenden</td></tr>
+              <tr><td>Custom-Element-Tags</td><td>Müssen einen Bindestrich enthalten</td><td>Zum Beispiel <code>my-app</code> statt <code>myapp</code></td></tr>
+              <tr><td>Kein SSR</td><td>Nur clientseitig</td><td>-</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </documentation-layout>
+[/template]

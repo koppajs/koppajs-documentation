@@ -1,0 +1,15 @@
+  <documentation-layout path="/examples">
+    <section class="docs-page">
+      <section class="docs-hero-card">
+        <div class="docs-stack">
+          <p class="docs-eyebrow">Examples</p>
+          <h1 class="docs-title">From mini patterns to the full todo app.</h1>
+          <p class="docs-subtitle">Examples help you not just read the API, but see it in coherent code.</p>
+          <p class="docs-lead">This page supplements the reference with small, focused snippets and a complete project example. This means you can find individual patterns for state, props and lifecycle as well as a multi-part app structure in one place.</p>
+        </div>
+
+        <article class="docs-mini-card">
+          <p class="docs-label">Mini example</p>
+          <pre class="docs-code"><code>[template]
+  &lt;button onClick="increment"&gt;{{ count }}&lt;/button&gt;
+</code></pre></article></section></section></documentation-layout>

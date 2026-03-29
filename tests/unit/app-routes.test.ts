@@ -1,17 +1,21 @@
 import { describe, expect, it } from "vitest";
 
 import { appRoutes } from "../../src/app-routes";
+import { createDocumentationRoutes } from "../../src/documentation-config";
 
 describe("app route definitions", () => {
   it("keeps the documentation sections stable and ends with an explicit fallback route", () => {
     expect(appRoutes.map((route) => route.path)).toEqual([
       "/",
       "/getting-started",
+      "/guides",
+      "/examples",
+      "/api",
+      "/tooling",
       "/packages",
-      "/testing",
       "*",
     ]);
-    expect(appRoutes.at(-1)?.name).toBe("not-found");
+    expect(appRoutes.at(-1)?.name).toBe("documentation-not-found");
   });
 
   it("assigns unique names and renderable metadata to each final route", () => {
@@ -35,5 +39,24 @@ describe("app route definitions", () => {
       expect(names.has(routeName)).toBe(false);
       names.add(routeName);
     }
+  });
+
+  it("can generate embeddable docs routes with a prefixed base path", () => {
+    const embeddedRoutes = createDocumentationRoutes({
+      basePath: "/docs",
+      includeFallback: false,
+      pathStyle: "flat",
+    });
+
+    expect(embeddedRoutes.map((route) => route.path)).toEqual([
+      "/docs",
+      "/docs-getting-started",
+      "/docs-guides",
+      "/docs-examples",
+      "/docs-api",
+      "/docs-tooling",
+      "/docs-packages",
+    ]);
+    expect(embeddedRoutes.some((route) => route.path === "*")).toBe(false);
   });
 });

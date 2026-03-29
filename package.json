@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Canonical KoppaJS documentation website built with KoppaJS core, router, and the official Vite plugin.",
+  "description": "KoppaJS documentation app with standalone runtime and embeddable documentation surface.",
   "author": "Bastian Bensch",
   "license": "Apache-2.0",
   "keywords": [
@@ -20,6 +20,12 @@
   "engines": {
     "node": ">=22",
     "npm": ">=10"
+  },
+  "exports": {
+    ".": "./src/integration.ts",
+    "./integration": "./src/integration.ts",
+    "./i18n": "./src/i18n.ts",
+    "./routes": "./src/documentation-config.ts"
   },
   "scripts": {
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true});require('node:fs').rmSync('coverage',{recursive:true,force:true});require('node:fs').rmSync('playwright-report',{recursive:true,force:true});require('node:fs').rmSync('test-results',{recursive:true,force:true})\"",

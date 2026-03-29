@@ -1,0 +1,16 @@
+[template]
+  {{ locale === 'en' ? contentEn : '' }}
+  <documentation-not-found-page-de if="locale === 'de'"></documentation-not-found-page-de>
+[/template]
+
+[ts]
+  import contentEn from "../content/pages/en/not-found-page-content";
+  import { getKoppaLocale } from "../i18n";
+
+  return {
+    state: {
+      locale: getKoppaLocale(),
+      contentEn,
+    },
+  };
+[/ts]
