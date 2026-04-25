@@ -32,7 +32,7 @@ describe("repository metadata contract", () => {
     }
   });
 
-  it("declares the 0.1.0 pre-1.0 website baseline and local engine policy", () => {
+  it("declares the 0.0.1 release baseline and local engine policy", () => {
     const packageJson = JSON.parse(
       readFileSync(new URL("../../package.json", import.meta.url), "utf8"),
     ) as {
@@ -48,7 +48,7 @@ describe("repository metadata contract", () => {
       "utf8",
     ).trim();
 
-    expect(packageJson.version).toBe("0.1.0");
+    expect(packageJson.version).toBe("0.0.1");
     expect(packageJson.engines?.node).toBe(">=22");
     expect(nvmrc).toBe("22");
     expect(npmrc).toContain("engine-strict=true");

@@ -1,6 +1,6 @@
 {
   "name": "koppajs-documentation",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "description": "KoppaJS documentation app with standalone runtime and embeddable documentation surface.",
@@ -24,8 +24,10 @@
   "exports": {
     ".": "./src/integration.ts",
     "./integration": "./src/integration.ts",
-    "./i18n": "./src/i18n.ts",
-    "./routes": "./src/documentation-config.ts"
+    "./routes": "./src/documentation-config.ts",
+    "./ecosystem": "./src/ecosystem.ts",
+    "./code-blocks": "./src/code-blocks.ts",
+    "./theme.css": "./src/theme.css"
   },
   "scripts": {
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true});require('node:fs').rmSync('coverage',{recursive:true,force:true});require('node:fs').rmSync('playwright-report',{recursive:true,force:true});require('node:fs').rmSync('test-results',{recursive:true,force:true})\"",
@@ -53,7 +55,7 @@
     "validate": "npm run check && npm run test:e2e",
     "release:check": "npm run validate"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@koppajs/koppajs-core": "^3.0.7",
     "@koppajs/koppajs-router": "^0.1.2"
   },
@@ -61,6 +63,8 @@
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^10.0.1",
+    "@koppajs/koppajs-core": "^3.0.7",
+    "@koppajs/koppajs-router": "^0.1.2",
     "@koppajs/koppajs-vite-plugin": "^1.0.4",
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.4.0",
@@ -81,5 +85,9 @@
       "prettier --write"
     ],
     "*.{css,html,json,md,yml,yaml}": "prettier --write"
+  },
+  "dependencies": {
+    "@fontsource/geist-mono": "^5.2.7",
+    "@fontsource/geist-sans": "^5.2.5"
   }
 }

@@ -1,0 +1,121 @@
+[template]
+  <documentation-layout
+    :path="path"
+    :page-html="pageHtml"
+  ></documentation-layout>
+[/template]
+
+[ts]
+  import { installCodeBlockCopyButtons } from "../code-blocks";
+  import { getDocumentationPage } from "../documentation-content";
+  import {
+    getDocumentationRouteMap,
+    resolveDocumentationPath,
+  } from "../documentation-config";
+
+  const hydrateInternalLinks = (element, routeMap) => {
+    element
+      ?.querySelectorAll("a[data-doc-path]")
+      .forEach((link) => {
+        const docPath = link.getAttribute("data-doc-path");
+
+        if (!docPath) {
+          return;
+        }
+
+        const href = routeMap[docPath] ?? docPath;
+
+        link.setAttribute("href", href);
+        link.setAttribute("data-route", href);
+      });
+  };
+
+  const resolvePage = () => {
+    const routeMap = getDocumentationRouteMap();
+    const currentPath =
+      resolveDocumentationPath(window.location.pathname, routeMap) ?? "/overview";
+    const page = getDocumentationPage(currentPath);
+
+    if (!page) {
+      throw new Error(`Unknown documentation page for path ${currentPath}.`);
+    }
+
+    return {
+      page,
+      routeMap,
+    };
+  };
+
+  const renderPageHtml = (page, routeMap) => {
+    const actions = (page.actions ?? [])
+      .map((action) => {
+        const href = routeMap[action.path] ?? action.path;
+        const primaryClass =
+          action.variant === "primary" ? " koppa-button--primary" : "";
+
+        return `<a class="koppa-button${primaryClass}" href="${href}" data-route="${href}">${action.label}</a>`;
+      })
+      .join("");
+
+    return `
+      <article class="docs-page">
+        <header class="docs-page__hero">
+          <div class="docs-page__hero-copy">
+            <p class="koppa-eyebrow">${page.eyebrow}</p>
+            <h1 class="docs-page__title">${page.headline}</h1>
+            <p class="docs-page__lead">${page.lead}</p>
+            ${actions ? `<div class="docs-page__actions">${actions}</div>` : ""}
+          </div>
+        </header>
+
+        <div class="docs-page__body koppa-prose koppa-stack">
+          ${page.bodyHtml}
+        </div>
+      </article>
+    `;
+  };
+
+  const createInitialState = () => {
+    const { page, routeMap } =
+      typeof window === "undefined"
+        ? {
+            page: getDocumentationPage("/overview"),
+            routeMap: {},
+          }
+        : resolvePage();
+
+    if (!page) {
+      throw new Error("Documentation overview page is missing.");
+    }
+
+    return {
+      path: page.path,
+      pageHtml: renderPageHtml(page, routeMap),
+    };
+  };
+
+  return {
+    state: createInitialState(),
+    methods: {
+      syncPage() {
+        const { page, routeMap } = resolvePage();
+
+        this.path = page.path;
+        this.pageHtml = renderPageHtml(page, routeMap);
+      },
+      hydrateContent() {
+        const routeMap = getDocumentationRouteMap();
+
+        installCodeBlockCopyButtons(this.element);
+        hydrateInternalLinks(this.element, routeMap);
+      },
+    },
+    mounted() {
+      this.syncPage();
+      this.hydrateContent();
+    },
+    updated() {
+      this.hydrateContent();
+    },
+  };
+[/ts]

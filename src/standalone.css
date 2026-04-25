@@ -1,18 +1,14 @@
-html,
-body {
-  margin: 0;
-  min-height: 100%;
-}
-
-html {
-  background: #08111f;
-}
+@import "./style.css";
 
 body {
   min-height: 100vh;
-  background: #08111f;
 }
 
-body::before {
-  content: none;
+documentation-standalone-shell {
+  display: block;
+  min-height: 100vh;
+}
+
+documentation-standalone-shell .documentation-standalone-outlet {
+  min-height: 100vh;
 }

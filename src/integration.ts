@@ -1,34 +1,42 @@
 import "./style.css";
 
 import { registerDocumentationComponents } from "./components";
+import { installCodeBlockCopyButtons } from "./code-blocks";
 import {
-  createDocumentationRoutes,
   createDocumentationRouteMap,
+  createDocumentationRoutes,
   documentationNavigationItems,
   getDocumentationNavigationItems,
+  getDocumentationRouteMap,
   getDocumentationRouteMeta,
   getDocumentationShellCopy,
-  getDocumentationRouteMap,
   installDocumentationRouteMap,
+  normalizeDocumentationBasePath,
+  resolveDocumentationPath,
   withDocumentationBase,
   withDocumentationBaseStyle,
 } from "./documentation-config";
-import { registerPages } from "./pages";
+import { ecosystemPackages } from "./ecosystem";
+import { normalizeRedirectedRouteUrl } from "./router-runtime";
 
 export {
-  createDocumentationRoutes,
   createDocumentationRouteMap,
+  createDocumentationRoutes,
   documentationNavigationItems,
+  ecosystemPackages,
   getDocumentationNavigationItems,
+  getDocumentationRouteMap,
   getDocumentationRouteMeta,
   getDocumentationShellCopy,
-  getDocumentationRouteMap,
+  installCodeBlockCopyButtons,
   installDocumentationRouteMap,
+  normalizeDocumentationBasePath,
+  normalizeRedirectedRouteUrl,
+  resolveDocumentationPath,
   withDocumentationBase,
   withDocumentationBaseStyle,
 };
 
 export const registerDocumentation = (): void => {
   registerDocumentationComponents();
-  registerPages();
 };

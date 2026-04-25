@@ -1,0 +1,62 @@
+[template]
+  <documentation-layout
+    path="/__not-found__"
+    toc-json="[]"
+    :page-html="pageHtml"
+  ></documentation-layout>
+[/template]
+
+[ts]
+  import { getDocumentationRouteMap } from "../documentation-config";
+
+  const renderNotFoundPageHtml = (overviewHref, gettingStartedHref) => `
+    <article class="docs-page">
+      <header class="docs-page__hero">
+        <div class="docs-page__hero-copy">
+          <p class="koppa-eyebrow">Not Found</p>
+          <h1 class="docs-page__title">This documentation route does not exist.</h1>
+          <p class="docs-page__lead">
+            Use the sidebar to return to a known section or go back to the overview
+            page and pick a documented entry point.
+          </p>
+
+          <div class="docs-page__actions">
+            <a
+              class="koppa-button koppa-button--primary"
+              href="${overviewHref}"
+              data-route="${overviewHref}"
+            >
+              Open overview
+            </a>
+            <a
+              class="koppa-button"
+              href="${gettingStartedHref}"
+              data-route="${gettingStartedHref}"
+            >
+              Open getting started
+            </a>
+          </div>
+        </div>
+      </header>
+    </article>
+  `;
+
+  return {
+    state: {
+      overviewHref: "/",
+      gettingStartedHref: "/getting-started",
+      pageHtml: "",
+    },
+    created() {
+      const routeMap = getDocumentationRouteMap();
+
+      this.overviewHref = routeMap["/"] ?? "/";
+      this.gettingStartedHref =
+        routeMap["/getting-started"] ?? "/getting-started";
+      this.pageHtml = renderNotFoundPageHtml(
+        this.overviewHref,
+        this.gettingStartedHref,
+      );
+    },
+  };
+[/ts]

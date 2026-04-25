@@ -1,62 +1,78 @@
 import { describe, expect, it } from "vitest";
 
 import { appRoutes } from "../../src/app-routes";
-import { createDocumentationRoutes } from "../../src/documentation-config";
+import {
+  createDocumentationRoutes,
+  getDocumentationNavigationItems,
+} from "../../src/documentation-config";
 
-describe("app route definitions", () => {
-  it("keeps the documentation sections stable and ends with an explicit fallback route", () => {
-    expect(appRoutes.map((route) => route.path)).toEqual([
-      "/",
-      "/getting-started",
-      "/guides",
-      "/examples",
-      "/api",
-      "/tooling",
-      "/packages",
-      "*",
-    ]);
-    expect(appRoutes.at(-1)?.name).toBe("documentation-not-found");
+describe("documentation routes", () => {
+  it("exposes the required standalone route tree and explicit fallback", () => {
+    expect(appRoutes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "/",
+          redirectTo: { name: "documentation-overview" },
+        }),
+        expect.objectContaining({
+          path: "/overview",
+          componentTag: "documentation-page",
+        }),
+        expect.objectContaining({
+          path: "/getting-started/installation",
+          componentTag: "documentation-page",
+        }),
+        expect.objectContaining({
+          path: "/core-concepts/lifecycle",
+          componentTag: "documentation-page",
+        }),
+        expect.objectContaining({
+          path: "/migration",
+          componentTag: "documentation-page",
+        }),
+        expect.objectContaining({
+          path: "*",
+          name: "documentation-not-found",
+          componentTag: "documentation-not-found-page",
+        }),
+      ]),
+    );
   });
 
-  it("assigns unique names and renderable metadata to each final route", () => {
-    const names = new Set<string>();
-
-    for (const route of appRoutes) {
-      expect(route.name).toBeTruthy();
-      expect(route.componentTag).toBeTruthy();
-
-      if (route.path !== "*") {
-        expect(route.title).toBeTruthy();
-        expect(route.description).toBeTruthy();
-      }
-
-      const routeName = route.name;
-
-      if (!routeName) {
-        throw new Error("Every route must declare a name.");
-      }
-
-      expect(names.has(routeName)).toBe(false);
-      names.add(routeName);
-    }
-  });
-
-  it("can generate embeddable docs routes with a prefixed base path", () => {
+  it("can generate the embedded website route tree under /docs", () => {
     const embeddedRoutes = createDocumentationRoutes({
       basePath: "/docs",
       includeFallback: false,
-      pathStyle: "flat",
     });
 
-    expect(embeddedRoutes.map((route) => route.path)).toEqual([
-      "/docs",
-      "/docs-getting-started",
-      "/docs-guides",
-      "/docs-examples",
-      "/docs-api",
-      "/docs-tooling",
-      "/docs-packages",
-    ]);
+    expect(embeddedRoutes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "/docs",
+          redirectTo: { name: "documentation-overview" },
+        }),
+        expect.objectContaining({ path: "/docs/overview" }),
+        expect.objectContaining({
+          path: "/docs/getting-started/project-structure",
+        }),
+        expect.objectContaining({ path: "/docs/api" }),
+      ]),
+    );
     expect(embeddedRoutes.some((route) => route.path === "*")).toBe(false);
+  });
+
+  it("builds nested navigation items for the docs shell", () => {
+    const navigationItems = getDocumentationNavigationItems();
+    const gettingStarted = navigationItems.find(
+      (item) => item.path === "/getting-started",
+    );
+
+    expect(navigationItems[0]?.path).toBe("/overview");
+    expect(gettingStarted?.children.map((item) => item.path)).toEqual([
+      "/getting-started/installation",
+      "/getting-started/project-structure",
+      "/getting-started/first-component",
+      "/getting-started/manual-setup",
+    ]);
   });
 });

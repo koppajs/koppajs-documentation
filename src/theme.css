@@ -1,0 +1,487 @@
+@import "@fontsource/geist-sans/latin-400.css";
+@import "@fontsource/geist-sans/latin-600.css";
+@import "@fontsource/geist-sans/latin-700.css";
+@import "@fontsource/geist-mono/latin-400.css";
+
+:root {
+  color-scheme: dark;
+  --koppa-bg: #08111f;
+  --koppa-bg-subtle: #060c18;
+  --koppa-surface: rgba(9, 16, 31, 0.78);
+  --koppa-surface-raised: rgba(11, 22, 40, 0.92);
+  --koppa-surface-strong: #102742;
+  --koppa-surface-code: #09101f;
+  --koppa-border: rgba(148, 163, 184, 0.2);
+  --koppa-border-strong: rgba(148, 163, 184, 0.32);
+  --koppa-text: #edf6ff;
+  --koppa-text-muted: #a7bfd7;
+  --koppa-text-soft: #7f94ac;
+  --koppa-accent: #64dce8;
+  --koppa-accent-strong: #97f3fb;
+  --koppa-accent-ink: #0f1117;
+  --koppa-accent-soft: rgba(100, 220, 232, 0.12);
+  --koppa-accent-soft-strong: rgba(100, 220, 232, 0.18);
+  --koppa-accent-border: rgba(100, 220, 232, 0.3);
+  --koppa-accent-border-soft: rgba(100, 220, 232, 0.18);
+  --koppa-danger-soft: rgba(172, 100, 100, 0.12);
+  --koppa-shadow: 0 22px 48px rgba(0, 0, 0, 0.24);
+  --koppa-radius-xs: 0.65rem;
+  --koppa-radius-sm: 0.9rem;
+  --koppa-radius-md: 1.2rem;
+  --koppa-radius-lg: 1.8rem;
+  --koppa-space-1: 0.35rem;
+  --koppa-space-2: 0.6rem;
+  --koppa-space-3: 0.9rem;
+  --koppa-space-4: 1.2rem;
+  --koppa-space-5: 1.6rem;
+  --koppa-space-6: 2rem;
+  --koppa-space-7: 2.8rem;
+  --koppa-space-8: 3.8rem;
+  --koppa-space-9: 5rem;
+  --koppa-page-width: min(1200px, calc(100vw - 2.5rem));
+  --koppa-prose-width: 72ch;
+  --koppa-tracking-display: -0.03em;
+  --koppa-tracking-heading: -0.02em;
+  --koppa-tracking-card-heading: -0.015em;
+  --koppa-tracking-ui: 0;
+  --koppa-font-sans:
+    "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --koppa-font-mono:
+    "Geist Mono", ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Monaco,
+    Consolas, "Liberation Mono", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+html {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(100, 220, 232, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(16, 39, 66, 0.55),
+      transparent 32%
+    ),
+    linear-gradient(
+      160deg,
+      var(--koppa-bg) 0%,
+      var(--koppa-bg-subtle) 45%,
+      var(--koppa-surface-strong) 100%
+    );
+}
+
+body {
+  background: transparent;
+  color: var(--koppa-text);
+  font-family: var(--koppa-font-sans);
+  line-height: 1.65;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 82%);
+  opacity: 0.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+code,
+pre {
+  font-family: var(--koppa-font-mono);
+}
+
+:focus-visible {
+  outline: 2px solid var(--koppa-accent);
+  outline-offset: 2px;
+}
+
+.koppa-container {
+  width: var(--koppa-page-width);
+  margin: 0 auto;
+}
+
+.koppa-skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 50;
+  padding: 0.7rem 1rem;
+  border-radius: var(--koppa-radius-xs);
+  background: var(--koppa-surface-raised);
+  color: var(--koppa-text);
+  border: 1px solid var(--koppa-border-strong);
+  transform: translateY(-200%);
+}
+
+.koppa-skip-link:focus {
+  transform: translateY(0);
+}
+
+.koppa-eyebrow {
+  margin: 0;
+  color: var(--koppa-accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.koppa-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.85rem;
+  padding: 0.72rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid var(--koppa-border);
+  background: transparent;
+  color: var(--koppa-text);
+  font-weight: 600;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.koppa-button:hover,
+.koppa-button:focus-visible {
+  border-color: var(--koppa-border-strong);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.koppa-button--primary {
+  border-color: var(--koppa-accent);
+  background: var(--koppa-accent);
+  color: var(--koppa-accent-ink);
+}
+
+.koppa-button--primary:hover,
+.koppa-button--primary:focus-visible {
+  border-color: var(--koppa-accent);
+  background: var(--koppa-accent-strong);
+}
+
+.koppa-button--subtle {
+  background: var(--koppa-accent-soft);
+  border-color: var(--koppa-accent-border);
+  color: var(--koppa-accent-strong);
+}
+
+.koppa-card {
+  display: grid;
+  gap: var(--koppa-space-3);
+  min-height: 100%;
+  padding: var(--koppa-space-5);
+  border: 1px solid var(--koppa-border);
+  border-radius: var(--koppa-radius-md);
+  background: rgba(26, 32, 39, 0.78);
+  box-shadow: var(--koppa-shadow);
+}
+
+.koppa-card h3,
+.koppa-card h4,
+.koppa-card p,
+.koppa-card ul {
+  margin: 0;
+}
+
+.koppa-card h3,
+.koppa-card h4 {
+  letter-spacing: var(--koppa-tracking-card-heading);
+}
+
+.koppa-card--quiet {
+  box-shadow: none;
+  background: rgba(32, 39, 49, 0.62);
+}
+
+.koppa-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.koppa-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--koppa-accent-border);
+  background: var(--koppa-accent-soft);
+  color: var(--koppa-accent-strong);
+  font-size: 0.86rem;
+}
+
+.koppa-prose {
+  max-width: var(--koppa-prose-width);
+}
+
+.koppa-prose > *:first-child {
+  margin-top: 0;
+}
+
+.koppa-prose p,
+.koppa-prose ul,
+.koppa-prose ol,
+.koppa-prose table,
+.koppa-prose pre {
+  margin: 0 0 1rem;
+}
+
+.koppa-prose p,
+.koppa-prose li {
+  color: var(--koppa-text-muted);
+}
+
+.koppa-prose strong,
+.koppa-table strong {
+  color: var(--koppa-text);
+}
+
+.koppa-inline-code {
+  padding: 0.12rem 0.38rem;
+  border-radius: 0.42rem;
+  border: 1px solid var(--koppa-border-strong);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--koppa-accent-strong);
+}
+
+.koppa-link {
+  color: var(--koppa-text);
+  text-decoration: underline;
+  text-decoration-color: var(--koppa-accent-border);
+  text-underline-offset: 0.16em;
+}
+
+.koppa-link:hover,
+.koppa-link:focus-visible {
+  text-decoration-color: var(--koppa-accent);
+}
+
+.koppa-grid {
+  display: grid;
+  gap: var(--koppa-space-4);
+}
+
+.koppa-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.koppa-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.koppa-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.koppa-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--koppa-border);
+  border-radius: var(--koppa-radius-md);
+  background: rgba(16, 21, 27, 0.86);
+}
+
+.koppa-table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+}
+
+.koppa-table th,
+.koppa-table td {
+  padding: 0.95rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--koppa-border);
+}
+
+.koppa-table th {
+  color: var(--koppa-text);
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.koppa-table td {
+  color: var(--koppa-text-muted);
+}
+
+.koppa-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.koppa-code-block {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--koppa-border);
+  border-radius: var(--koppa-radius-md);
+  background: var(--koppa-surface-code);
+}
+
+.koppa-code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--koppa-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.koppa-code-block__label {
+  color: var(--koppa-text-soft);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.koppa-copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--koppa-border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--koppa-text-muted);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.koppa-copy-button:hover,
+.koppa-copy-button:focus-visible {
+  border-color: var(--koppa-accent);
+  color: var(--koppa-text);
+}
+
+.koppa-copy-button[data-copy-state="done"] {
+  border-color: var(--koppa-accent-border);
+  background: var(--koppa-accent-soft);
+  color: var(--koppa-accent-strong);
+}
+
+.koppa-code-block pre {
+  margin: 0;
+  padding: 1rem 1rem 1.2rem;
+  overflow-x: auto;
+  color: var(--koppa-text);
+}
+
+.koppa-code-block code {
+  white-space: pre;
+}
+
+.koppa-callout {
+  display: grid;
+  gap: 0.85rem;
+  padding: var(--koppa-space-5);
+  border: 1px solid var(--koppa-accent-border);
+  border-radius: var(--koppa-radius-md);
+  background: var(--koppa-accent-soft);
+}
+
+.koppa-callout p,
+.koppa-callout h3 {
+  margin: 0;
+}
+
+.koppa-callout p {
+  color: var(--koppa-accent-strong);
+}
+
+.koppa-callout--muted {
+  border-color: var(--koppa-border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.koppa-stack {
+  display: grid;
+  gap: var(--koppa-space-4);
+}
+
+.koppa-divider {
+  border: 0;
+  border-top: 1px solid var(--koppa-border);
+  margin: 0;
+}
+
+.koppa-text-muted {
+  color: var(--koppa-text-muted);
+}
+
+.koppa-list {
+  display: grid;
+  gap: 0.7rem;
+  padding-left: 1.1rem;
+}
+
+@media (max-width: 1080px) {
+  .koppa-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .koppa-grid--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --koppa-page-width: min(100vw - 1.5rem, 100%);
+  }
+
+  .koppa-grid--2,
+  .koppa-grid--3,
+  .koppa-grid--4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .koppa-table {
+    min-width: 0;
+  }
+}

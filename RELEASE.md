@@ -34,6 +34,13 @@ Important consequences:
 - a merge to `main` alone does not create a release
 - a tag push is the technical release trigger
 - the tag version must exactly match `package.json`
+- the release workflow creates a GitHub Release only; it does not deploy or
+  publish this project
+- the official website may pin this repository by Git tag to embed a fixed
+  documentation baseline
+- when releasing both documentation and website for the same version, release
+  `koppajs-documentation` first and wait for this workflow to pass before
+  tagging `koppajs-website`
 - after a successful release, `main` should be merged back into `develop`
 
 Do not tag `develop`.
@@ -142,6 +149,11 @@ Verify that:
 
 After the release has completed successfully, merge the updated `main` back
 into `develop`.
+
+If `koppajs-website` is also being released for the same version, complete this
+documentation release first. Only tag the website after the documentation
+workflow has passed and the documentation tag is available for the website
+dependency pin.
 
 ## GitHub Workflow Behavior
 

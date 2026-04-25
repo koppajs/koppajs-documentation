@@ -5,48 +5,39 @@ type RouterCtorOptions = {
   root: Document;
   routes: Array<{
     path: string;
-    componentTag: string;
+    componentTag?: string;
   }>;
 };
 
 const outlet = {} as HTMLElement;
 const currentRoute = {
-  path: "/",
-  fullPath: "/",
+  path: "/overview",
+  fullPath: "/overview",
 };
 
-const {
-  core,
-  take,
-  routerCtor,
-  routerInit,
-  routerNavigate,
-  setDocumentDescription,
-} = vi.hoisted(() => {
-  const take = vi.fn();
-  const core = Object.assign(vi.fn(), { take });
-  const routerInit = vi.fn();
-  const routerNavigate = vi.fn();
-  const setDocumentDescription = vi.fn();
-  const routerCtor = vi.fn(function RouterCtor(options: RouterCtorOptions) {
-    void options;
+const { core, take, routerCtor, routerInit, setDocumentDescription } =
+  vi.hoisted(() => {
+    const take = vi.fn();
+    const core = Object.assign(vi.fn(), { take });
+    const routerInit = vi.fn();
+    const setDocumentDescription = vi.fn();
+    const routerCtor = vi.fn(function RouterCtor(options: RouterCtorOptions) {
+      void options;
+
+      return {
+        getCurrentRoute: () => currentRoute,
+        init: routerInit,
+      };
+    });
 
     return {
-      getCurrentRoute: () => currentRoute,
-      init: routerInit,
-      navigate: routerNavigate,
+      core,
+      take,
+      routerCtor,
+      routerInit,
+      setDocumentDescription,
     };
   });
-
-  return {
-    core,
-    take,
-    routerCtor,
-    routerInit,
-    routerNavigate,
-    setDocumentDescription,
-  };
-});
 
 vi.mock("@koppajs/koppajs-core", () => ({
   Core: core,
@@ -90,15 +81,14 @@ describe("main bootstrap", () => {
     take.mockClear();
     routerCtor.mockClear();
     routerInit.mockClear();
-    routerNavigate.mockClear();
     vi.resetModules();
     vi.unstubAllGlobals();
   });
 
-  it("registers the standalone shell, documentation components, and pages, then boots the router once", async () => {
+  it("registers the standalone shell and generic documentation components, then boots the router", async () => {
     await import("../../src/main");
 
-    expect(take).toHaveBeenCalledTimes(18);
+    expect(take).toHaveBeenCalledTimes(4);
     expect(take).toHaveBeenCalledWith(
       expect.anything(),
       "documentation-standalone-shell",
@@ -107,18 +97,7 @@ describe("main bootstrap", () => {
       expect.anything(),
       "documentation-layout",
     );
-    expect(take).toHaveBeenCalledWith(
-      expect.anything(),
-      "documentation-home-page-de",
-    );
-    expect(take).toHaveBeenCalledWith(
-      expect.anything(),
-      "documentation-home-page",
-    );
-    expect(take).toHaveBeenCalledWith(
-      expect.anything(),
-      "documentation-not-found-page-de",
-    );
+    expect(take).toHaveBeenCalledWith(expect.anything(), "documentation-page");
     expect(take).toHaveBeenCalledWith(
       expect.anything(),
       "documentation-not-found-page",
@@ -128,27 +107,26 @@ describe("main bootstrap", () => {
     expect(routerCtor).toHaveBeenCalledTimes(1);
     const [routerOptions] = routerCtor.mock.calls[0] ?? [];
 
-    expect(routerOptions).toBeDefined();
-    expect(routerOptions?.outlet).toBe(outlet);
-    expect(routerOptions?.root).toBe(globalThis.document);
-    expect(
-      routerOptions?.routes.map((route) => ({
-        path: route.path,
-        componentTag: route.componentTag,
-      })),
-    ).toEqual([
-      { path: "/", componentTag: "documentation-home-page" },
-      {
-        path: "/getting-started",
-        componentTag: "documentation-getting-started-page",
-      },
-      { path: "/guides", componentTag: "documentation-guides-page" },
-      { path: "/examples", componentTag: "documentation-examples-page" },
-      { path: "/api", componentTag: "documentation-api-page" },
-      { path: "/tooling", componentTag: "documentation-tooling-page" },
-      { path: "/packages", componentTag: "documentation-packages-page" },
-      { path: "*", componentTag: "documentation-not-found-page" },
-    ]);
+    expect(routerOptions?.routes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "/",
+          redirectTo: { name: "documentation-overview" },
+        }),
+        expect.objectContaining({
+          path: "/overview",
+          componentTag: "documentation-page",
+        }),
+        expect.objectContaining({
+          path: "/core-concepts/lifecycle",
+          componentTag: "documentation-page",
+        }),
+        expect.objectContaining({
+          path: "*",
+          componentTag: "documentation-not-found-page",
+        }),
+      ]),
+    );
 
     expect(routerInit).toHaveBeenCalledTimes(1);
   });

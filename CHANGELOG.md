@@ -12,7 +12,17 @@ not every internal refactor.
 
 ## [Unreleased]
 
-- Prepared the initial `0.1.0` baseline for the documentation website with a
+This section is intentionally empty.
+Changes will only appear here when they affect the released documentation
+baseline, repository behavior, or public guidance.
+
+---
+
+## [0.0.1] - Initial Documentation Baseline
+
+**2026-04-25**
+
+- Prepared the initial `0.0.1` baseline for the documentation website with a
   routed KoppaJS shell, release workflow, commitlint hooks, quality docs, ADRs,
   and executable verification.
 
