@@ -18,6 +18,23 @@ baseline, repository behavior, or public guidance.
 
 ---
 
+## [0.0.2] - Product Framing Alignment
+
+**2026-06-24**
+
+This release aligns the documentation copy with the updated public KoppaJS
+product positioning while keeping the existing documentation route surface.
+
+### Changed
+
+- Refined the documentation overview around product-to-technical learning flow,
+  package boundaries, runtime behavior, and documentation routes
+- Updated Components, Tooling, Packages, Architecture, and FAQ copy to emphasize
+  component-first design, explicit contracts, and runtime/build-time ownership
+- Adjusted browser coverage for the updated documentation overview heading
+
+---
+
 ## [0.0.1] - Initial Documentation Baseline
 
 **2026-04-25**

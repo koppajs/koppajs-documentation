@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("renders the docs shell and navigates through the 0.0.1 route structure", async ({
+test("renders the docs shell and navigates through the 0.0.2 route structure", async ({
   page,
 }) => {
   await page.goto("/");
@@ -9,7 +9,7 @@ test("renders the docs shell and navigates through the 0.0.1 route structure", a
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "Understand the system before you start wiring components.",
+      name: "Understand how KoppaJS works before you wire an app.",
     }),
   ).toBeVisible();
   await expect(page.getByLabel("Documentation navigation")).toBeVisible();
