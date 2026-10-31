@@ -13,8 +13,15 @@ not every internal refactor.
 ## [Unreleased]
 
 This section is intentionally empty.
-Changes will only appear here when they affect the released documentation
-baseline, repository behavior, or public guidance.
+
+---
+
+## [0.0.3]
+
+- Use English for the standalone HTML language, description, and document title.
+- Add unit and browser regression checks for English document metadata.
+- Update Core and Router peer/development ranges to `^3.0.12` and `^0.1.9`,
+  and the Vite plugin development range to `^2.0.1`.
 
 ---
 

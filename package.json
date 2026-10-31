@@ -1,6 +1,6 @@
 {
   "name": "koppajs-documentation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "type": "module",
   "description": "KoppaJS documentation app with standalone runtime and embeddable documentation surface.",
@@ -56,16 +56,16 @@
     "release:check": "npm run validate"
   },
   "peerDependencies": {
-    "@koppajs/koppajs-core": "^3.0.7",
-    "@koppajs/koppajs-router": "^0.1.2"
+    "@koppajs/koppajs-core": "^3.0.12",
+    "@koppajs/koppajs-router": "^0.1.9"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/js": "^10.0.1",
-    "@koppajs/koppajs-core": "^3.0.7",
-    "@koppajs/koppajs-router": "^0.1.2",
-    "@koppajs/koppajs-vite-plugin": "^1.0.4",
+    "@koppajs/koppajs-core": "^3.0.12",
+    "@koppajs/koppajs-router": "^0.1.9",
+    "@koppajs/koppajs-vite-plugin": "^2.0.1",
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.4.0",
     "@vitest/coverage-v8": "^4.0.18",
