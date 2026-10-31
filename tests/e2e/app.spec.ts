@@ -1,9 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-test("renders the docs shell and navigates through the 0.0.2 route structure", async ({
+test("renders the docs shell and navigates through the 0.0.3 route structure", async ({
   page,
 }) => {
   await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    "Start here after the product overview: package map, learning paths, runtime model, and technical documentation routes.",
+  );
 
   await expect(page).toHaveURL(/\/overview$/);
   await expect(

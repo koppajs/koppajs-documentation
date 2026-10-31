@@ -3,6 +3,18 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 describe("repository metadata contract", () => {
+  it("uses English for standalone document metadata", () => {
+    const html = readFileSync(
+      new URL("../../index.html", import.meta.url),
+      "utf8",
+    );
+    expect(html).toContain('<html lang="en">');
+    expect(html).toContain("<title>KoppaJS Documentation</title>");
+    expect(html).toContain(
+      "Complete KoppaJS user documentation with standalone and embeddable documentation interfaces.",
+    );
+  });
+
   it("exposes the baseline quality and release scripts contributors rely on", () => {
     const packageJson = JSON.parse(
       readFileSync(new URL("../../package.json", import.meta.url), "utf8"),
@@ -32,7 +44,7 @@ describe("repository metadata contract", () => {
     }
   });
 
-  it("declares the 0.0.2 release baseline and local engine policy", () => {
+  it("declares the 0.0.3 release baseline and local engine policy", () => {
     const packageJson = JSON.parse(
       readFileSync(new URL("../../package.json", import.meta.url), "utf8"),
     ) as {
@@ -48,7 +60,7 @@ describe("repository metadata contract", () => {
       "utf8",
     ).trim();
 
-    expect(packageJson.version).toBe("0.0.2");
+    expect(packageJson.version).toBe("0.0.3");
     expect(packageJson.engines?.node).toBe(">=22");
     expect(nvmrc).toBe("22");
     expect(npmrc).toContain("engine-strict=true");

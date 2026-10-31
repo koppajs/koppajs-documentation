@@ -10,6 +10,9 @@ documentation website hosted in this repository.
 
 ## Behavior
 
+- Owned documentation prose and standalone HTML metadata must use English. The
+  standalone document declares `lang="en"`; routes and user-authored values remain
+  unchanged.
 - The repository must provide a Vite-powered KoppaJS application shell.
 - The app shell must render routed documentation pages through
   `@koppajs/koppajs-router`.
