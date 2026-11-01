@@ -29,6 +29,8 @@ documentation website hosted in this repository.
 - Local quality gates must include linting, formatting, type checking, and
   Vitest
 - Browser verification must be available through Playwright
+- Hosted CI and release jobs pin `ubuntu-24.04`, which supports the installed
+  Playwright browser-dependency installer. Review support before updating it.
 
 ## Edge Cases
 

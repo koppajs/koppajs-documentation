@@ -3,6 +3,17 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 describe("repository metadata contract", () => {
+  it("pins CI and release to the supported Ubuntu browser image", () => {
+    for (const file of ["ci.yml", "release.yml"]) {
+      const workflow = readFileSync(
+        new URL(`../../.github/workflows/${file}`, import.meta.url),
+        "utf8",
+      );
+      expect(workflow).toContain("runs-on: ubuntu-24.04");
+      expect(workflow).not.toContain("runs-on: ubuntu-latest");
+    }
+  });
+
   it("uses English for standalone document metadata", () => {
     const html = readFileSync(
       new URL("../../index.html", import.meta.url),
@@ -44,7 +55,7 @@ describe("repository metadata contract", () => {
     }
   });
 
-  it("declares the 0.0.3 release baseline and local engine policy", () => {
+  it("declares the 0.0.4 release baseline and local engine policy", () => {
     const packageJson = JSON.parse(
       readFileSync(new URL("../../package.json", import.meta.url), "utf8"),
     ) as {
@@ -60,7 +71,7 @@ describe("repository metadata contract", () => {
       "utf8",
     ).trim();
 
-    expect(packageJson.version).toBe("0.0.3");
+    expect(packageJson.version).toBe("0.0.4");
     expect(packageJson.engines?.node).toBe(">=22");
     expect(nvmrc).toBe("22");
     expect(npmrc).toContain("engine-strict=true");

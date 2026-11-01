@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("renders the docs shell and navigates through the 0.0.3 route structure", async ({
+test("renders the docs shell and navigates through the 0.0.4 route structure", async ({
   page,
 }) => {
   await page.goto("/");
