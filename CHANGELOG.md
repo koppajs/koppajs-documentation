@@ -16,7 +16,21 @@ This section is intentionally empty.
 
 ---
 
+## [0.0.4]
+
+- Pin CI and release jobs to Ubuntu 24.04 so Playwright 1.58.2 can install its
+  Chromium dependencies after the `ubuntu-latest` migration to Ubuntu 26.04.
+- Retain the English metadata and updated KoppaJS dependencies from the 0.0.3
+  candidate, and verify the supported runner policy with regression tests.
+- Leave the failed `v0.0.3` tag unchanged rather than rewriting release history.
+
+---
+
 ## [0.0.3]
+
+The tag was created, but hosted browser installation failed before validation
+and GitHub Release creation because Playwright 1.58.2 does not support Ubuntu
+26.04. Version 0.0.4 supersedes this candidate.
 
 - Use English for the standalone HTML language, description, and document title.
 - Add unit and browser regression checks for English document metadata.

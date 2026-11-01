@@ -25,6 +25,7 @@ Tests exist to protect both the website shell and the route-level docs surface.
 
 ## CI
 
+- CI and release jobs pin Ubuntu 24.04 for Playwright 1.58.2 compatibility.
 - GitHub Actions runs the main quality gate on Node.js 22 and 24.
 - The browser smoke job runs on Node.js 22 with Playwright Chromium.
 - The tag-driven release workflow reruns `npm run validate` before creating a

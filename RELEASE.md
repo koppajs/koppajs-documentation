@@ -65,6 +65,14 @@ Tooling expectations for local verification:
 This repository enforces `engine-strict=true` through the tracked `.npmrc`, so
 incompatible Node.js or npm versions should be treated as a release blocker.
 
+## Hosted Runner Baseline
+
+CI and release jobs pin `ubuntu-24.04`. Playwright 1.58.2 does not support
+Ubuntu 26.04, so `ubuntu-latest` can fail while installing browser dependencies
+before validation runs. Review Playwright OS support before changing this pin.
+Do not move an existing version tag to repair a failed release; publish the fix
+under a new patch version.
+
 ## Local Validation Before Branching
 
 Before creating the release branch, validate the exact release candidate
